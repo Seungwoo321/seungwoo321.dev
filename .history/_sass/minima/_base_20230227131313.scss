@@ -1,0 +1,26 @@
+--- --- @import "{{ site.theme }}";
+
+// Override the Minima CSS properties here
+$spacing-unit: 24px;
+
+// Fix deprecation warning using math.div()
+$margin-bottom: math.div($spacing-unit, 2);
+$padding-left: math.div($spacing-unit, 2);
+$padding-right: math.div($spacing-unit, 2);
+
+@media (min-width: $minima-breakpoints-medium) {
+  .container {
+    max-width: $container-max-width;
+  }
+
+  // Fix deprecation warning using math.div()
+  .padding-vertical {
+    padding: math.div($spacing-unit, 3) math.div($spacing-unit, 2);
+  }
+
+  .padding-horizontal {
+    padding: math.div($spacing-unit, 2);
+  }
+}
+
+// Add your own CSS below this line
