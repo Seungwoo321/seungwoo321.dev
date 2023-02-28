@@ -39,11 +39,6 @@ author:
   github: Seungwoo321
   linkedin: seungwoo321
 include: ['_pages']
-plugins:
-  - jekyll-github-metadata
-github:
-  token: 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
-
 # defaults:
 #   # _pages
 #   - scope:

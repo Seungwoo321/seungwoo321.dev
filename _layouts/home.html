@@ -4,6 +4,8 @@ layout: archive
 
 {{ content }}
 
+{% include repositories.html %}
+
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
 
 {% if paginator %}
@@ -19,6 +21,6 @@ layout: archive
   {% endfor %}
 </div>
 
-{% include repositories.html %}
+
 
 {% include paginator.html %}
