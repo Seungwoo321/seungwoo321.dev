@@ -10,9 +10,9 @@ const siteMetadata = {
   theme: 'system', // system, dark or light
   siteUrl: 'https://seungwoo321.github.io',
   siteRepo: 'https://github.com/Seungwoo321.github.io',
-  siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
-  socialBanner: '/static/images/template2.png',
+  siteLogo: '/assets/images/logo.png',
+  image: '/assets/images/avatar.png',
+  socialBanner: '/assets/images/template2.png',
   email: 'seungwoo321@gmail.com',
   github: 'https://github.com/Seungwoo321',
   twitter: '',

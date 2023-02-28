@@ -1,16 +1,16 @@
 ---
+author_profile: true
+layout: post
 title: Padding Hack으로 반응형 SVG 만들기
-date: '2019-12-15'
-tags: ["SVG", "CSS"]
-draft: false
-summary: 지역과 관련된 데이터를 시각화하기 위해 SVG와 d3 함수를 이용해서 표현한 지도에 패딩 핵(Padding Hack)이란 기법을 통해서 반응형으로 구현한 경험을 정리하자.
+date: 2019-12-15
+tags: SVG CSS
+permalink: /blog/:year/:month/:day/:title/
+toc: true
+excerpt_separator: <!--more-->
 ---
 
-<TOCInline toc={props.toc} exclude="Overview" toHeading={2,3} asDisclosure/>
-
-## Overview
-
 지역과 관련된 데이터를 시각화하기 위해 SVG와 d3 함수를 이용해서 표현한 지도에 패딩 핵(Padding Hack)이란 기법을 통해서 반응형으로 구현한 경험을 정리하자.
+<!--more-->
 
 <img src="/assets/images/posts/2019/12/15/vue-datamaps-example.png" alt="vue-datamaps example" />
 
@@ -20,7 +20,7 @@ summary: 지역과 관련된 데이터를 시각화하기 위해 SVG와 d3 함�
 
 d3.js로 지도를 조금 더 쉽게 그릴 수 있게 구현된 라이브러리 [DataMaps](https://datamaps.github.io/)를 분석해 보니 옵션으로 `responsive: true` 을 설정했을 때 내부의 SVG요소에 패딩 핵 스타일이 적용된다.
 
-그리고 window 창의 resize 이벤트 발생 시 현재 크기를 이전 크기를 나눈 다음 d3 api를 사용해 새로운 scale 값으로 변경하는 `Datamaps.prototype.resize` 메서드가 실행된다. 
+그리고 window 창의 resize 이벤트 발생 시 현재 크기를 이전 크기를 나눈 다음 d3 api를 사용해 새로운 scale 값으로 변경하는 `Datamaps.prototype.resize` 메서드가 실행된다.
 
 [공식 문서](https://github.com/markmarkoh/datamaps#responsive-maps)에서는 SVG를 감싸는 container 요소에 패딩 핵을 위한 스타일링에 대해 설명하고 있다.
 
@@ -38,47 +38,27 @@ d3.js로 지도를 조금 더 쉽게 그릴 수 있게 구현된 라이브러리
 
 다음 예제들은 div.demo-block-content 내부의 div가 컨테이닝 블록이 되어 예제 코드 div 요소의 `padding` 값에 영향을 준다.
 
+> 개발자 도구에서 div 요소를 선택하고 부여된 `padding` 속성 값을 조절하면서 확인해 보자.
 
-> 개발자 도구에서 div 요소를 선택하고 부여된 `padding` 속성 값을 조절하면서 확인해 보자. 
+* padding-top 10% 실행결과
 
-
-**padding-top 10% 실행결과**
-
-<div
-    style={{
-        width: "100%",
-        paddingTop: "10%",
-        backgroundColor: "yellow"
-    }}>
-</div>
+<div style="width:100%;padding-top:10%;background-color: yellow;"></div>
 
 ```html
   <div style="width:100%;padding-top:10%;background-color: yellow;"></div>
 ```
 
-**padding-bottom 20% 실행결과**
+* padding-bottom 20% 실행결과
 
-<div
-    style={{
-        width: "100%",
-        paddingTop: "20%",
-        backgroundColor: "yellow"
-    }}>
-</div>
+<div style="width:100%;padding-bottom:20%;background-color: yellow;"></div>
 
 ```html
   <div style="width:100%;padding-bottom:20%;background-color: yellow;"></div>
 ```
 
-**width 50%; pading-top 30% 실행결과**
+* width 50%; pading-top 30% 실행결과
 
-<div
-    style={{
-        width: "100%",
-        paddingTop: "30%",
-        backgroundColor: "yellow"
-    }}>
-</div>
+<div style="width:50%;padding-top:30%;background-color: yellow;"></div>
 
 ```html
   <div style="width:50%;padding-top:30%;background-color: yellow;"></div>
@@ -86,24 +66,10 @@ d3.js로 지도를 조금 더 쉽게 그릴 수 있게 구현된 라이브러리
 
 이번에는 추가된 외부 div 요소가 컨테이닝 블록으로 식별되어 외부 div 요소의 너비 내에서 `padding` 값이 계산되는 예제이다.
 
-**외부 요소의 크기가 400px 이고, 내부 요소의 width 100%, padding-top 50% 실행결과**
+* 외부 요소의 크기가 400px 이고, 내부 요소의 width 100%, padding-top 50% 실행결과
 
-<div
-    style={{
-        position: 'relative',
-        width: '400px',
-        height: '400px',
-        border: '1px solid',
-}}>
-    <div
-        style={{
-            position: 'abosolute',
-            width: '100%',
-            height: 0,
-            paddingTop: '50%',
-            backgroundColor: 'yellow'
-        }}>
-    </div>
+<div style="position:relative;width:400px;height:400px;border:1px solid;">
+  <div style="position:abosolute;width:100%;height:0;padding-top:50%;background-color: yellow;"></div>
 </div>
 
 ```html
@@ -112,22 +78,10 @@ d3.js로 지도를 조금 더 쉽게 그릴 수 있게 구현된 라이브러리
 </div>
 ```
 
-**외부 요소의 크기가 400px 이고, 내부 요소의 width 50%, padding-bottom 50% 실행결과**
+* 외부 요소의 크기가 400px 이고, 내부 요소의 width 50%, padding-bottom 50% 실행결과
 
-<div style={{
-    position: 'relative',
-    width: '400px',
-    height: '400px',
-    border: '1px solid'
-}}>
-    <div style={{
-        position:'abosolute',
-        width: '50%',
-        height: 0,
-        paddingBottom:'50%',
-        backgroundColor: 'yellow'
-    }}>
-    </div>
+<div style="position:relative;width:400px;height:400px;border:1px solid;">
+  <div style="position:abosolute;width:50%;height:0;padding-bottom:50%;background-color: yellow;"></div>
 </div>
 
 ```html
@@ -202,7 +156,9 @@ SVG를 div 컨테이너로 감싼다.
 
 Vue에서 SVG로 그린 지도에 위의 4단계에 따라 패딩 핵을 적용해서 반응형으로 구현한 예제이다.
 
-```html:WorldMap.vue
+* WorldMap.vue
+
+```html
 <template>
   <div class="container" ref="container">
     <svg class="map">
@@ -298,13 +254,7 @@ path {
 <div>
     <iframe
         src="https://codesandbox.io/embed/responsive-world-map-s4cth7?fontsize=14&hidenavigation=1&theme=dark&view=preview"
-        style={{
-            width:'100%',
-            height: '500px',
-            border: 0,
-            borderRadius: '4px',
-            overflow: 'hidden'
-        }}
+        style="width:100%;height:500px;border: 0;borderRadius: 4px;overflow: hidden"
         title="responsive-world-map"
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"

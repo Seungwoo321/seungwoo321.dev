@@ -1,0 +1,48 @@
+<!-- index.html -->
+
+<!-- 슬라이드가 출력될 영역 -->
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img src="https://repository-images.githubusercontent.com/203787151/107b0b6c-e450-46f3-839c-9c9d7fa0cdaf"
+        alt="vue-pivottable-preview">
+    </div>
+    <div class="swiper-slide">
+      <img src="https://repository-images.githubusercontent.com/220975258/06e33aad-24ba-4dba-9cb9-dba3c9f170d8"
+        alt="vue-datamaps-preview">
+    </div>
+    <div class="swiper-slide">
+      <img src="https://repository-images.githubusercontent.com/469343546/703dfe79-0f20-443b-aaaa-fbf23b82479e"
+        alt="cats-preview">
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+</div>
+<style>
+  .swiper-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* 변경된 부분 */
+  }
+
+  .swiper-slide img {
+    max-height: 80vh;
+    margin: 0 20px;
+  }
+</style>
+<!-- swiper.js 라이브러리 추가 -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+    },
+    direction: 'horizontal',
+    pagination: {
+      el: '.swiper-pagination',
+      dynamicBullets: true,
+    },
+  });
+</script>

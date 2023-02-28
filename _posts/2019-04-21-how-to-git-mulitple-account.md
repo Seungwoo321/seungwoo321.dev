@@ -4,18 +4,13 @@ layout: post
 title: 여러 개의 GitHub/CodeCommit 인증정보 관리하기
 date: "2019-04-21"
 categories: tech
-tags: git, CodeCommit
+tags: git CodeCommit
 permalink: /blog/:year/:month/:day/:title/
+toc: true
 excerpt_separator: <!--more-->
 ---
 이렇게 하면 단일 컴퓨터에서 여러 GItHub/CodeCommit 인증정보를 매번 입력하지 않고 HTTPS 프로토콜로 리모트 저장소에 접근할 수 있다.
 <!--more-->
-
-<!-- 
-summary: 이렇게 하면 단일 컴퓨터에서 여러 GItHub/CodeCommit 인증정보를 매번 입력하지 않고 HTTPS 프로토콜로 리모트 저장소에 접근할 수 있다.
- -->
-
-<!-- <TOCInline toc={props.toc} exclude="Overview" toHeading={2,3} asDisclosure/> -->
 
 ## Overview
 
@@ -29,7 +24,7 @@ _Note: 2021년 8월 13일부로 비밀번호 인증 지원이 종료되었습니
 
 ## 1. Windows 에서 git 커맨드 사용하기  
 
-Windows 환경이 아닌 경우에는 [2. credential store 설정하기](#2-credential-store-setup)를 진행한다.
+Windows 환경이 아닌 경우에는 [2. credential store 설정하기](#2-credential-store-설정하기)를 진행한다.
 
 ### Cmder 다운로드 및 설치
 
@@ -51,7 +46,7 @@ git bash 사용하기
 $ 
 ```
 
-<h2 id="2-credential-store-setup">2. credential store 설정하기</h2>
+## 2. credential store 설정하기
 
 프로젝트 root의 `.git` 디렉토리에 `.git-credentials`이라는 파일을 생성하고 인증정보가 이곳에 저장 되도록 다음 명령어들을 실행한다.
 
