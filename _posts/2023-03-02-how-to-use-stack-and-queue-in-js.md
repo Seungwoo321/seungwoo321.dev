@@ -255,7 +255,7 @@ class Queue {
 
 ## 추천문제
 
-- [BOJ 1966 - 실버 III](https://www.acmicpc.net/problem/1966)
-- [BOJ 1926 - 실버 IV](https://www.acmicpc.net/problem/1926)
 - [BOJ 18258 - 실버 IV](https://www.acmicpc.net/problem/18258)
-- [BOJ 2468 - 골드 V](https://www.acmicpc.net/problem/2468)
+- [BOJ 1966 - 실버 III](https://www.acmicpc.net/problem/1966)
+- [BOJ 1926 - 실버 I](https://www.acmicpc.net/problem/1926)
+- [BOJ 2468 - 실버 I](https://www.acmicpc.net/problem/2468)
