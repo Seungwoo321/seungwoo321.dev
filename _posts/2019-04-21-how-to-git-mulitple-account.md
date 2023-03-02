@@ -1,10 +1,9 @@
 ---
-author_profile: true
-layout: post
 title: 여러 개의 GitHub/CodeCommit 인증정보 관리하기
 date: "2019-04-21"
-categories: tech
-tags: git CodeCommit
+tags: ["git", "CodeCommit"]
+author_profile: true
+layout: post
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

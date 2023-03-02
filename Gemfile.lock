@@ -264,7 +264,6 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-feed
-  jekyll-github-metadata (~> 2.13)
   jekyll-include-cache
   jekyll-paginate-v2
   jekyll-seo-tag

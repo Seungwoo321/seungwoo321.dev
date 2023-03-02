@@ -8,5 +8,3 @@ gem "jekyll-sitemap"
 gem "jekyll-feed"
 gem 'webrick'
 gem "minimal-mistakes-jekyll"
-
-gem "jekyll-github-metadata", "~> 2.13"

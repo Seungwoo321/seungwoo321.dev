@@ -1,10 +1,10 @@
 ---
-author_profile: true
-layout: post
 title: Padding Hack으로 반응형 SVG 만들기
 date: 2019-12-15
-tags: SVG CSS
+tags: ["SVG", "CSS"]
 permalink: /blog/:year/:month/:day/:title/
+layout: post
+author_profile: true
 toc: true
 excerpt_separator: <!--more-->
 ---
