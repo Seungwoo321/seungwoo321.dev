@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-cd out/
+cd _site
 
 git init 
 git config --local user.name "Seungwoo Lee"
@@ -11,5 +11,3 @@ git commit -m "chore: by deploy.sh"
 git push -f git@github.com:Seungwoo321/Seungwoo321.github.io.git master:gh-pages
 
 cd -
-
-rm -rf out
