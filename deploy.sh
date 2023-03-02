@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -e
 
+rm -rf _site
+
+bundle exec jekyll build
+
 cd _site
 
 git init 

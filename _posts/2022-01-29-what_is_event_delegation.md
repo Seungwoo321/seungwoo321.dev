@@ -70,4 +70,4 @@ event.target은 실제 클릭한 요소를 가리키고 event.currentTarget 은 
 
 * [https://davidwalsh.name/event-delegate](https://davidwalsh.name/event-delegate)
 * [event.target](http://event.target)
-* [EventTarget.addEventListener() - Web API | MDN](https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener)
+* [EventTarget.addEventListener - MDN](https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener)
