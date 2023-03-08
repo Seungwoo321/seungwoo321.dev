@@ -89,8 +89,6 @@ infinite_loop.js 코드를 실행하면 무한 루프를 돌며 프로그램이 
 while (true) {}
 ```
 
-그러면 "Execution of infinite_loop.js has timed out" 메시지가 출력되며 정상적으로 시간 제한이 적용되는 것을 확인할 수 있습니다. BOJ에서는 시간 초과(TLE) 에러가 발생할 것입니다.
-
 - 실행 결과:
 
 ```bash
@@ -98,6 +96,8 @@ $ ./run.sh infinite_loop.js 128 10
 [2023-03-08 16:01:46] Start executing infinite_loop.js (Memory limit: 128MB, Time limit: 10 s)
 [2023-03-08 16:01:56] Execution of infinite_loop.js has timed out
 ```
+
+그러면 "Execution of infinite_loop.js has timed out" 메시지가 출력되며 정상적으로 시간 제한이 적용되는 것을 확인할 수 있습니다. BOJ에서는 시간 초과(TLE) 에러가 발생할 것입니다.
 
 ## 메모리 제한 테스트
 
@@ -113,8 +113,6 @@ while (true) {
 }
 ```
 
-그러면 "Execution of mem_limit.js has exceeded memory limit of 1MB" 메시지가 출력되며 정상적으로 메모리 제한이 적용되는 것을 확인할 수 있습니다 BOJ에서는 메모리 초과(MLE) 에러가 발생할 것입니다.
-
 - 실행 결과:
 
 ```bash
@@ -122,6 +120,8 @@ $ ./run.sh mem_limit.js 1 10
 [2023-03-08 16:20:14] Start executing run.test.js (Memory limit: 1MB, Time limit: 10 s)
 [2023-03-08 16:20:25] Execution of run.test.js has exceeded memory limit of 1MB
 ```
+
+그러면 "Execution of mem_limit.js has exceeded memory limit of 1MB" 메시지가 출력되며 정상적으로 메모리 제한이 적용되는 것을 확인할 수 있습니다 BOJ에서는 메모리 초과(MLE) 에러가 발생할 것입니다.
 
 ## 정상 실행시
 
