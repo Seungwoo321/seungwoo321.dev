@@ -39,7 +39,7 @@ author:
   github: Seungwoo321
   linkedin: seungwoo321
 include: ['_pages']
-
+og_image: /assets/images/template.png
 # Analytics
 # google_analytics: true
 analytics:
