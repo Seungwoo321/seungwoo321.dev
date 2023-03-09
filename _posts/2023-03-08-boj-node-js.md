@@ -117,8 +117,8 @@ while (true) {
 
 ```bash
 $ ./run.sh mem_limit.js 1 10
-[2023-03-08 16:20:14] Start executing run.test.js (Memory limit: 1MB, Time limit: 10 s)
-[2023-03-08 16:20:25] Execution of run.test.js has exceeded memory limit of 1MB
+[2023-03-08 16:20:14] Start executing mem_limit.js (Memory limit: 1MB, Time limit: 10 s)
+[2023-03-08 16:20:25] Execution of mem_limit.js has exceeded memory limit of 1MB
 ```
 
 그러면 "Execution of mem_limit.js has exceeded memory limit of 1MB" 메시지가 출력되며 정상적으로 메모리 제한이 적용되는 것을 확인할 수 있습니다 BOJ에서는 메모리 초과(MLE) 에러가 발생할 것입니다.
