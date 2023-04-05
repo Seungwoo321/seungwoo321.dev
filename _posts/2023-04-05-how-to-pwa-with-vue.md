@@ -95,7 +95,7 @@ S3 콘솔에서는 선택한 버킷의 권한 탭에 CORS(Cross-origin 리소스
 
 <img src="/assets/images/posts/2023/04/05/003.png"/>
 
-새로운 정책 생성을 선택하면 위 화면에서 CORS 설정을 키고 Access-Control-Allow-Origin 등 CORS 관련 헤더 값을 설정할 수 있습니다
+새로운 정책 생성을 선택하면 Access-Control-Allow-Origin 등 CORS 관련 헤더 값을 설정할 수 있습니다
 
 여기서 끝이 아니고 하단에 `사용자 지정 헤더 - 선택사항`에서 Service-Worker-Allowed 헤더에 호출하는 도메인 허용까지 해 주고 나서야 CORS로 요청한 리소스를 서비스 워커가 캐싱 할 수 있게 됩니다.
 
