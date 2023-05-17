@@ -39,6 +39,7 @@ author:
   email: seungwoo321@gmail.com
   github: Seungwoo321
   linkedin: seungwoo321
+og_image: /assets/images/template.png
 include:
   - .htaccess
   - _pages
