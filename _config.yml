@@ -29,7 +29,8 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # github_username:  Seungwoo321
 theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: dark
-paginate: 5
+paginate: 5 # amount of posts to show
+paginate_path: /page:num/
 author:
   name: Seungwoo Lee
   avatar: /assets/images/avatar.jpeg
@@ -38,8 +39,39 @@ author:
   email: seungwoo321@gmail.com
   github: Seungwoo321
   linkedin: seungwoo321
-include: ['_pages']
 og_image: /assets/images/template.png
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - "*.sublime-project"
+  - "*.sublime-workspace"
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - Capfile
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README
+  - tmp
+keep_files:
+  - .git
+  - .svn
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 # Analytics
 # google_analytics: true
 analytics:
