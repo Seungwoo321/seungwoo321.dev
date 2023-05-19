@@ -3,7 +3,7 @@ title: Amazon Athena SQL로 캔들 데이터 생성하기
 date: '2021-04-25'
 tags: ["Athena", "SQL", "Trading Bot"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

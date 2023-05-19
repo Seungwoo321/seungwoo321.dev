@@ -3,7 +3,7 @@ title: 자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월
 date: '2021-06-07'
 tags: ["Trading Bot", "TypeScript"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

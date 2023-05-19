@@ -3,7 +3,7 @@ title: CSS 박스 모델
 date: '2022-10-16'
 tags: ["Frontend", "CSS"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

@@ -3,7 +3,7 @@ title: 타입과 문법, 스코프와 클로저 YOU DON'T KNOW JS 책을 읽고
 date: '2021-05-02'
 tags: ["Frontend", "JavaScript", "Closure"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

@@ -3,7 +3,7 @@ title: SSR과 CSR의 장단점
 date: '2022-01-26'
 tags: ["Frontend"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

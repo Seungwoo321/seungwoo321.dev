@@ -3,7 +3,7 @@ title: 이벤트 핸들러 내부의 this
 date: '2022-01-30'
 tags: ["Frontend", "JavaScript"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

@@ -3,7 +3,7 @@ title: 트레이딩 봇 2.0 개발 후기
 date: '2022-01-28'
 tags: ["Trading Bot"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

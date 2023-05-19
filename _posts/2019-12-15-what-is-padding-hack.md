@@ -4,7 +4,7 @@ date: 2019-12-15
 tags: ["SVG", "CSS"]
 permalink: /blog/:year/:month/:day/:title/
 layout: post
-author_profile: true
+author_profile: false
 toc: true
 excerpt_separator: <!--more-->
 ---

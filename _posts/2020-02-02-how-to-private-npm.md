@@ -1,10 +1,10 @@
 ---
 layout: post
-author_profile: true
+author_profile: false
 title: 비공개 NPM 저장소 구성하기
 date: '2020-02-02'
 tags: ["NPM"]
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

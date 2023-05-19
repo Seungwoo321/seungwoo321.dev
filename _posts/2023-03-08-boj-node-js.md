@@ -3,7 +3,7 @@ title: BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적�
 date: '2023-03-08'
 tags: ["Shell", "javascript", "Algorithms", "BOJ"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

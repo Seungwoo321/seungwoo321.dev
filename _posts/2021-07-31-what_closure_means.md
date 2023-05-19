@@ -3,7 +3,7 @@ title: 클로저(Closure)는 무엇이며, 어떻게/왜 사용하나요 ?
 date: '2021-07-31'
 tags: ["Frontend", "JavaScript", "Closure"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

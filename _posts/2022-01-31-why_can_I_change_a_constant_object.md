@@ -3,7 +3,7 @@ title: 어떻게 const로 선언한 객체의 속성값이 바뀌는 것일까
 date: '2022-01-31'
 tags: ["Frontend", "JavaScript"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

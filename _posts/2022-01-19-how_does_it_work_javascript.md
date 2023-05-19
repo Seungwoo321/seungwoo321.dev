@@ -3,7 +3,7 @@ title: 자바스크립트의 동작원리
 date: '2022-01-19'
 tags: ["Frontend", "JavaScript"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

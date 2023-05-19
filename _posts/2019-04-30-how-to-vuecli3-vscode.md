@@ -2,7 +2,7 @@
 title: VSCode에서 Vue 개발 환경 구성하기
 date: "2019-04-30"
 tags: ["Vue", "VsCode"]
-author_profile: true
+author_profile: false
 layout: post
 permalink: /blog/:year/:month/:day/:title/
 toc: true

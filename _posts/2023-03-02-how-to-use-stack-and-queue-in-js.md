@@ -3,7 +3,7 @@ title: 자바스크립트에서 큐와 스택 자료구조 구현하기
 date: '2023-03-02'
 tags: ["Frontend", "javascript", "queue", "stack",]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

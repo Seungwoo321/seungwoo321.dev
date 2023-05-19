@@ -1,5 +1,5 @@
 ---
-author_profile: true
+author_profile: false
 layout: posts
 title: Blog
 permalink: /blog/

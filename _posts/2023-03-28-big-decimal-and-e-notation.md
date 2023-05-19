@@ -2,7 +2,7 @@
 title: 데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
 date: "2023-03-28"
 tags: ["javascript", "Frontend", "Big Decimal", "Double"]
-author_profile: true
+author_profile: false
 layout: post
 permalink: /blog/:year/:month/:day/:title/
 toc: true

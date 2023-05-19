@@ -3,7 +3,7 @@ title: IE 11 Syntax Error - Script1002
 date: '2020-03-16'
 tags: ["IE", "trouble shooting"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

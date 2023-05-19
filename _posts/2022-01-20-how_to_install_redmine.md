@@ -4,7 +4,7 @@ date: '2022-01-20'
 tags: ["CodeCommit", "trouble shooting", "Redmine"]
 draft: false
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

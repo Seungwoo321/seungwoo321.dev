@@ -2,7 +2,7 @@
 title: 여러 개의 GitHub/CodeCommit 인증정보 관리하기
 date: "2019-04-21"
 tags: ["git", "CodeCommit"]
-author_profile: true
+author_profile: false
 layout: post
 permalink: /blog/:year/:month/:day/:title/
 toc: true

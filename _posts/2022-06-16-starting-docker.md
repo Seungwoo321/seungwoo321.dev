@@ -3,7 +3,7 @@ title: 프론트엔드 개발자의 Docker 입문기
 date: '2022-06-16'
 tags: ["Docker", "Trading Bot"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->

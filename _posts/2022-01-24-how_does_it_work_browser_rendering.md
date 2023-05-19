@@ -3,7 +3,7 @@ title: 브라우저 렌더링 과정
 date: '2022-01-24'
 tags: ["Frontend", "JavaScript"]
 layout: post
-author_profile: true
+author_profile: false
 permalink: /blog/:year/:month/:day/:title/
 toc: true
 excerpt_separator: <!--more-->
