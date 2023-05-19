@@ -1,0 +1,832 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>타입과 문법, 스코프와 클로저 YOU DON’T KNOW JS 책을 읽고 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="클로저를 이해하고 있다고 생각했지만 실제로 말로 설명이 되지 않는다는 걸 깨닫고 이 책을 읽기 시작했다. 클로저 외에도 평소에 모르고 넘어갈 수 있었던 부분도 알게되서 생각보다 많은 도움이 된 책이다. 완벽하게 기억에 남을 때까지 반복해서 읽어야겠다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="타입과 문법, 스코프와 클로저 YOU DON’T KNOW JS 책을 읽고">
+<meta property="og:url" content="/blog/2021/05/02/book-you-dont-know-js-1/">
+
+
+  <meta property="og:description" content="클로저를 이해하고 있다고 생각했지만 실제로 말로 설명이 되지 않는다는 걸 깨닫고 이 책을 읽기 시작했다. 클로저 외에도 평소에 모르고 넘어갈 수 있었던 부분도 알게되서 생각보다 많은 도움이 된 책이다. 완벽하게 기억에 남을 때까지 반복해서 읽어야겠다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-05-02T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2021/05/02/book-you-dont-know-js-1/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="타입과 문법, 스코프와 클로저 YOU DON’T KNOW JS 책을 읽고">
+    <meta itemprop="description" content="클로저를 이해하고 있다고 생각했지만 실제로 말로 설명이 되지 않는다는 걸 깨닫고 이 책을 읽기 시작했다. 클로저 외에도 평소에 모르고 넘어갈 수 있었던 부분도 알게되서 생각보다 많은 도움이 된 책이다. 완벽하게 기억에 남을 때까지 반복해서 읽어야겠다.">
+    <meta itemprop="datePublished" content="2021-05-02T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">타입과 문법, 스코프와 클로저 YOU DON’T KNOW JS 책을 읽고
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-05-02T00:00:00+09:00">May 2, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#클로저-사용-찾아보기">클로저 사용 찾아보기</a></li><li><a href="#정리">정리</a></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><img src="/assets/images/posts/2021/05/02/happy-javascript.jpg" alt="happy-javascript" /></p>
+
+<p>클로저를 이해하고 있다고 생각했지만 실제로 말로 설명이 되지 않는다는 걸 깨닫고 이 책을 읽기 시작했다. 클로저 외에도 평소에 모르고 넘어갈 수 있었던 부분도 알게되서 생각보다 많은 도움이 된 책이다. 완벽하게 기억에 남을 때까지 반복해서 읽어야겠다.
+<!--more--></p>
+
+<h2 id="클로저-사용-찾아보기">클로저 사용 찾아보기</h2>
+
+<blockquote>
+  <p>잠시 이 책을 덮어보라. 한 가지 과제를 주겠다. 최근에 작성한 자바스크립트 코드를 열어 보라. 함수를 값으로 사용한 경우를 찾아보고, 알지 못했지만 이미 클로저를 사용하고 있는 부분을 확인해 보자. 기다리겠다. 자 … 이제 보이는가! p.245</p>
+</blockquote>
+
+<p>이 구절을 보고 클로저를 사용한 코드를 찾아보았다. vue-pivottable의 Issues 중 #19, #38를 해결하면서 작성한 예제용 코드에서 클로저를 사용한 예를 찾을 수 있었다.</p>
+
+<ul>
+  <li>/src/helper/utils.js</li>
+</ul>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/** global scope */</span>
+<span class="kd">const</span> <span class="nx">numberFormat</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">optsIn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="cm">/** outer function scope */</span>
+  <span class="kd">const</span> <span class="nx">defaults</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">digitsAfterDecimal</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="na">scaler</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="na">thousandsSep</span><span class="p">:</span> <span class="dl">'</span><span class="s1">,</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">decimalSep</span><span class="p">:</span> <span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">prefix</span><span class="p">:</span> <span class="dl">''</span><span class="p">,</span>
+    <span class="na">suffix</span><span class="p">:</span> <span class="dl">''</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">opts</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">defaults</span><span class="p">,</span> <span class="nx">optsIn</span><span class="p">)</span>
+  <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/** local scope  */</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">||</span> <span class="o">!</span><span class="nb">isFinite</span><span class="p">(</span><span class="nx">x</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="dl">''</span>
+    <span class="p">}</span>
+    <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">addSeparators</span><span class="p">(</span>
+      <span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">scaler</span> <span class="o">*</span> <span class="nx">x</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="nx">opts</span><span class="p">.</span><span class="nx">digitsAfterDecimal</span><span class="p">),</span>
+      <span class="nx">opts</span><span class="p">.</span><span class="nx">thousandsSep</span><span class="p">,</span>
+      <span class="nx">opts</span><span class="p">.</span><span class="nx">decimalSep</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">opts</span><span class="p">.</span><span class="nx">prefix</span><span class="p">}${</span><span class="nx">result</span><span class="p">}${</span><span class="nx">opts</span><span class="p">.</span><span class="nx">suffix</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>내부에 정의된 x를 받는 익명 함수의 렉시컬 스코프는 글로벌 범위, 외부 함수 범위, 내부 함수 범위가 된다.</p>
+
+<ul>
+  <li>/demo/example-vue-cli3/src/App.vue</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">PivotUtilities</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue-pivottable</span><span class="dl">'</span>
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="cm">/*
+    생략 (...)
+  */</span>
+  <span class="na">computed</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">aggregators</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">usFmt</span> <span class="o">=</span> <span class="nx">PivotUtilities</span><span class="p">.</span><span class="nx">numberFormat</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">usFmtInt</span> <span class="o">=</span> <span class="nx">PivotUtilities</span><span class="p">.</span><span class="nx">numberFormat</span><span class="p">({</span> <span class="na">digitsAfterDecimal</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+      <span class="kd">const</span> <span class="nx">usFmtPct</span> <span class="o">=</span> <span class="nx">PivotUtilities</span><span class="p">.</span><span class="nx">numberFormat</span><span class="p">({</span>
+        <span class="na">digitsAfterDecimal</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">scaler</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="na">suffix</span><span class="p">:</span> <span class="dl">'</span><span class="s1">%</span><span class="dl">'</span>
+      <span class="p">})</span>
+
+      <span class="k">return</span> <span class="p">((</span><span class="nx">tpl</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+        <span class="dl">'</span><span class="s1">Count</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">count</span><span class="p">(</span><span class="nx">usFmtInt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Count Unique Values</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">countUnique</span><span class="p">(</span><span class="nx">usFmtInt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">List Unique Values</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">listUnique</span><span class="p">(</span><span class="dl">'</span><span class="s1">, </span><span class="dl">'</span><span class="p">),</span>
+        <span class="na">Sum</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">)</span>
+        <span class="dl">'</span><span class="s1">Integer Sum</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">sum</span><span class="p">(</span><span class="nx">usFmtInt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Average</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">average</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Median</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">median</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sample Variance</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="kd">var</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sample Standard Deviation</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">stdev</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Minimum</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Maximum</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">First</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">first</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Last</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">last</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sum over Sum</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">sumOverSum</span><span class="p">(</span><span class="nx">usFmt</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sum as Fraction of Total</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">sum</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">total</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sum as Fraction of Rows</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">sum</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">row</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Sum as Fraction of Columns</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">sum</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">col</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Count as Fraction of Total</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">count</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">total</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Count as Fraction of Rows</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">count</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">row</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">),</span>
+        <span class="dl">'</span><span class="s1">Count as Fraction of Columns</span><span class="dl">'</span><span class="p">:</span> <span class="nx">tpl</span><span class="p">.</span><span class="nx">fractionOf</span><span class="p">(</span><span class="nx">tpl</span><span class="p">.</span><span class="nx">count</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">col</span><span class="dl">'</span><span class="p">,</span> <span class="nx">usFmtPct</span><span class="p">)</span>
+      <span class="p">})</span>
+      <span class="p">)(</span><span class="nx">PivotUtilities</span><span class="p">.</span><span class="nx">aggregatorTemplates</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="cm">/*
+    생략 (...)
+  */</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+
+</code></pre></div></div>
+
+<h2 id="정리">정리</h2>
+
+<blockquote>
+  <p>클로저는 함수를 렉시컬 스코프 밖에서 호출해도 함수는 자신의 렉시컬 스코프를 기억하고 접근할 수 있는 특성을 의미한다. p. 255</p>
+</blockquote>
+
+<p>PivotUtilities 객체의 메서드로 사용된 numberFormat() 함수는 내부 익명 함수를 리턴한다. 리턴하는 내부 함수는 클로저를 형성함으로써 usFmt, usFmInt, usFmtPct는 각각의 독립적인 렉시컬 스코프 환경을 갖게 된다.</p>
+
+<p>usFmt, usFmInt, usFmtPct 변수에 의해서 리턴된 내부 함수가 호출될 때 이 내부의 익명 함수는 본래 자신의 렉시컬 스코프 환경을 기억해서, opts 변수를 참조할 수 있게 된다.</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures">MDN에서 Closures 학습하기</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#closure" class="page__taxonomy-item" rel="tag">Closure</a><span class="sep">, </span>
+    
+      <a href="/tags/#frontend" class="page__taxonomy-item" rel="tag">Frontend</a><span class="sep">, </span>
+    
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-05-02T00:00:00+09:00">May 2, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2021/04/25/making-trading-bot-1/" class="pagination--pager" title="Amazon Athena SQL로 캔들 데이터 생성하기
+">Previous</a>
+    
+    
+      <a href="/blog/2021/05/20/making-trading-bot-2/" class="pagination--pager" title="InfluxDB를 활용한 주식차트 만들기
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1173 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CSS 기본 정리 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="이 글은 freeCodeCamp의 Basic CSS를 공부하면서 주요 내용을 정리한 글입니다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="CSS 기본 정리">
+<meta property="og:url" content="/blog/2020/03/13/basic-css/">
+
+
+  <meta property="og:description" content="이 글은 freeCodeCamp의 Basic CSS를 공부하면서 주요 내용을 정리한 글입니다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-03-13T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2020/03/13/basic-css/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CSS 기본 정리">
+    <meta itemprop="description" content="이 글은 freeCodeCamp의 Basic CSS를 공부하면서 주요 내용을 정리한 글입니다.">
+    <meta itemprop="datePublished" content="2020-03-13T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">CSS 기본 정리
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2020-03-13T00:00:00+09:00">March 13, 2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#css란-">CSS란 ?</a></li><li><a href="#css를-적용하는-방법">CSS를 적용하는 방법</a></li><li><a href="#class를-사용한-스타일-지정">Class를 사용한 스타일 지정</a></li><li><a href="#고유한-id-속성을-사용한-스타일-지정">고유한 id 속성을 사용한 스타일 지정</a></li><li><a href="#속성-선택기를-사용하여-스타일-지정">속성 선택기를 사용하여 스타일 지정</a></li><li><a href="#글꼴-스타일-지정하기">글꼴 스타일 지정하기</a></li><li><a href="#글꼴-스타일-구글-폰트-사용하기">글꼴 스타일 구글 폰트 사용하기</a></li><li><a href="#글꼴-스타일-오픈-타입-사용하기">글꼴 스타일 오픈 타입 사용하기</a></li><li><a href="#이미지의-사이즈">이미지의 사이즈</a></li><li><a href="#테두리-스타일-지정하기">테두리 스타일 지정하기</a></li><li><a href="#테두리-모서리를-둥글게">테두리 모서리를 둥글게</a></li><li><a href="#요소의-패딩-조정">요소의 패딩 조정</a></li><li><a href="#요소의-마진-조정">요소의 마진 조정</a></li><li><a href="#시계-방향-표기법을-사용하여-패딩-지정">시계 방향 표기법을 사용하여 패딩 지정</a></li><li><a href="#시계-방향-표기법-사용하여-마진-지정">시계 방향 표기법 사용하여 마진 지정</a></li><li><a href="#절대-단위와-상대-단위">절대 단위와 상대 단위</a></li><li><a href="#css-상속">CSS 상속</a></li><li><a href="#스타일링-우선순위">스타일링 우선순위</a></li><li><a href="#16진수-코드를-사용하여-색상-표현">16진수 코드를 사용하여 색상 표현</a></li><li><a href="#16진수-코드를-사용하여-색상-혼합">16진수 코드를 사용하여 색상 혼합</a></li><li><a href="#축약된-16진수-코드-사용하기">축약된 16진수 코드 사용하기</a></li><li><a href="#rgb값을-사용하여-색상-표현">RGB값을 사용하여 색상 표현</a></li><li><a href="#rgb값을-사용하여-색상-혼합">RGB값을 사용하여 색상 혼합</a></li><li><a href="#커스텀-css-변수-만들기">커스텀 CSS 변수 만들기</a></li><li><a href="#커스텀-css-변수-사용하기">커스텀 CSS 변수 사용하기</a></li><li><a href="#css변수의-브라우저-호환성-문제">CSS변수의 브라우저 호환성 문제</a></li><li><a href="#css-변수-상속">CSS 변수 상속</a></li><li><a href="#미디어-쿼리에서-css-변수-활용-하기">미디어 쿼리에서 CSS 변수 활용 하기</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>이 글은 freeCodeCamp의 Basic CSS를 공부하면서 주요 내용을 정리한 글입니다.
+<!--more--></p>
+
+<h2 id="css란-">CSS란 ?</h2>
+
+<p>CSS (Cascading Style Sheets)는 HTML로 작성하는 텍스트 및 기타 내용을 표시하는 방법을 브라우저에 알려준다.</p>
+
+<h2 id="css를-적용하는-방법">CSS를 적용하는 방법</h2>
+
+<ul>
+  <li>style 속성을 사용해서 HTML 요소에 인라인으로 스타일을 적용한다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h2</span> <span class="na">style=</span><span class="s">"color: blue;"</span><span class="nt">&gt;</span> Blue Text <span class="nt">&lt;/h2&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>HTML문서의 태그내에 <code class="language-plaintext highlighter-rouge">&lt;style&gt;&lt;/style&gt;</code>블록을 배치하고 <code class="language-plaintext highlighter-rouge">CSS 선택기</code>를 사용해서 스타일을 적용한다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;style&gt;</span>
+    <span class="nt">h2</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>외부 스타일 시트에 CSS 규칙을 작성한 다음 HTML 문서에서 해당 파일을 참조한다.</li>
+</ul>
+
+<p>index.html</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"./style.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>style.css</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">/* ... */</span>
+</code></pre></div></div>
+
+<h2 id="class를-사용한-스타일-지정">Class를 사용한 스타일 지정</h2>
+
+<ul>
+  <li>Class를 사용하여 여러 HTML 요소에 스타일을 적용 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.blue-text</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="고유한-id-속성을-사용한-스타일-지정">고유한 id 속성을 사용한 스타일 지정</h2>
+
+<ul>
+  <li>각 HTML 요소의 고유한 <code class="language-plaintext highlighter-rouge">id</code> 속성을 사용하여 단일 요소의 스타일을 지정 할 수 있다.</li>
+  <li>브라우저는 강제 하지 않지만, <code class="language-plaintext highlighter-rouge">id</code> 속성은 고유해야하는 것이 널리 권장되는 모범 사례이다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#app-title</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="속성-선택기를-사용하여-스타일-지정">속성 선택기를 사용하여 스타일 지정</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">id</code> 및 <code class="language-plaintext highlighter-rouge">class</code> 선택기 외에 <code class="language-plaintext highlighter-rouge">[attr=value]</code> 속성 선택기(attribute selector) 를 사용해서 스타일을 지정할 요소 그룹을 선택 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">'radio'</span><span class="o">]</span> <span class="p">{</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span> <span class="m">0px</span> <span class="m">20px</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="글꼴-스타일-지정하기">글꼴 스타일 지정하기</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">font-size</code> 글꼴 크기를 지정</li>
+  <li><code class="language-plaintext highlighter-rouge">font-family: FAMILY_NAME, GENERIC_NAME;</code> <code class="language-plaintext highlighter-rouge">FAMILY_NAME</code> 로 글꼴을 설정하고 없을 경우에는 <code class="language-plaintext highlighter-rouge">GENERIC_NAME을</code> 사용한다.</li>
+</ul>
+
+<h2 id="글꼴-스타일-구글-폰트-사용하기">글꼴 스타일 구글 폰트 사용하기</h2>
+
+<ul>
+  <li>운영체제에서 사용되는 일반적인 글꼴 외에도 사용자 정의 웹 글꼴을 지정 할 수 있다.</li>
+  <li><a href="https://fonts.google.com/">Google Fonts</a>는 글꼴의 URL을 참조하여 CSS에서 사용 할 수 있는 무료 웹 글꼴 라이브러리이다.</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"https://fonts.googleapis.com/css?family=Lobster"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;style&gt;</span>
+<span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="n">Lobster</span><span class="p">,</span> <span class="s1">"Open Sans"</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
+
+<h2 id="글꼴-스타일-오픈-타입-사용하기">글꼴 스타일 오픈 타입 사용하기</h2>
+
+<ul>
+  <li>글꼴을 다운로드 받은 후, 다음과 같이 <code class="language-plaintext highlighter-rouge">@font-face</code> 로 선언하고 사용 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@font-face</span> <span class="p">{</span>
+  <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Quesat Light Italic'</span><span class="p">;</span>
+  <span class="nl">src</span><span class="p">:</span> <span class="sx">url('./assets/fonts/Quesat/Quesat Light Italic Demo.otf')</span> <span class="n">format</span><span class="p">(</span><span class="s2">'opentype'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.logo</span> <span class="p">{</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="s2">'Quesat Bold Italic'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="이미지의-사이즈">이미지의 사이즈</h2>
+
+<ul>
+  <li>요소의 너비를 제어하는 <code class="language-plaintext highlighter-rouge">width</code> 속성을 사용한다.</li>
+  <li>글꼴과 마찬가지로 <code class="language-plaintext highlighter-rouge">px</code>(픽셀)을 사용하여 이미지 너비를 지정한다.</li>
+</ul>
+
+<h2 id="테두리-스타일-지정하기">테두리 스타일 지정하기</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">border</code>(테두리)에 <code class="language-plaintext highlighter-rouge">style</code>, <code class="language-plaintext highlighter-rouge">color</code>, <code class="language-plaintext highlighter-rouge">width</code> 같은 속성을 사용해서 테두리를 만들 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.red-border</span> <span class="p">{</span>
+    <span class="nl">border-width</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+    <span class="py">border-solid</span><span class="p">:</span> <span class="nb">solid</span><span class="p">;</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.blue-border</span> <span class="p">{</span>
+    <span class="nl">border</span><span class="p">:</span> <span class="m">1px</span> <span class="nb">solid</span> <span class="no">blue</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="테두리-모서리를-둥글게">테두리 모서리를 둥글게</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">border-raduis</code> 속성은 모서리를 둥글에 반올림 한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">px</code> (픽셀) 외에 <code class="language-plaintext highlighter-rouge">%</code> (퍼센티지)로 설정 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.red-border</span> <span class="p">{</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">5px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.blue-border</span> <span class="p">{</span>
+    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">50%</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="요소의-패딩-조정">요소의 패딩 조정</h2>
+
+<ul>
+  <li>HTML 요소는 기본적으로 작은 사각형이다.</li>
+  <li>HTML 요소를 둘러싸는 공간을 제어 하는 중요한 세 가지 속성은 <code class="language-plaintext highlighter-rouge">padding</code>, <code class="language-plaintext highlighter-rouge">margin</code>, <code class="language-plaintext highlighter-rouge">border</code> 이다.</li>
+  <li><code class="language-plaintext highlighter-rouge">padding</code>은 요소의 내용과 요소의 <code class="language-plaintext highlighter-rouge">border</code> 사이의 공간을 제어한다.</li>
+  <li>각 측면마다 다른 값을 갖도록 정의 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.blue-box</span> <span class="p">{</span>
+    <span class="nl">padding-top</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+    <span class="nl">padding-right</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">padding-bottom</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">padding-left</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="요소의-마진-조정">요소의 마진 조정</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">margin</code>은 요소의 <code class="language-plaintext highlighter-rouge">border</code>와 주변 요소 사이의 간격을 제어한다</li>
+  <li><code class="language-plaintext highlighter-rouge">margin</code> 을 음수 값으로 설정하면 요소가 커진다.</li>
+  <li>각 측면 마다 다른 값을 갖도록 정의 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.red-box</span> <span class="p">{</span>
+    <span class="nl">margin-top</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+    <span class="nl">margin-right</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="nl">margin-left</span><span class="p">:</span> <span class="m">40px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="시계-방향-표기법을-사용하여-패딩-지정">시계 방향 표기법을 사용하여 패딩 지정</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">padding-top</code>, <code class="language-plaintext highlighter-rouge">padding-right</code>, <code class="language-plaintext highlighter-rouge">padding-bottom</code>, <code class="language-plaintext highlighter-rouge">padding-left</code>를 시계방향으로 한줄에 모두 지정 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">padding</span><span class="o">:</span> <span class="err">10</span><span class="nt">px</span> <span class="err">20</span><span class="nt">px</span> <span class="err">10</span><span class="nt">px</span> <span class="err">20</span><span class="nt">px</span><span class="o">;</span>
+</code></pre></div></div>
+
+<h2 id="시계-방향-표기법-사용하여-마진-지정">시계 방향 표기법 사용하여 마진 지정</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">margin-top</code>, <code class="language-plaintext highlighter-rouge">margin-right</code>, <code class="language-plaintext highlighter-rouge">margin-bottom</code>, <code class="language-plaintext highlighter-rouge">margin-left</code>도 시계방향으로 한줄에 모두 지정 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">margin</span><span class="o">:</span> <span class="err">20</span><span class="nt">px</span> <span class="err">40</span><span class="nt">px</span> <span class="err">20</span><span class="nt">px</span> <span class="err">40</span><span class="nt">px</span><span class="o">;</span>
+</code></pre></div></div>
+
+<h2 id="절대-단위와-상대-단위">절대 단위와 상대 단위</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">px</code>(픽셀)은 길이 단위의 한 유형으로, 브라우저에 항목 크기 또는 간격을 지정하는 방법을 알려준다.</li>
+  <li>CSS에는 <code class="language-plaintext highlighter-rouge">px</code>(픽셀) 외에도 사용 할 수 있는 다양한 길이 단위 옵션이 있다.</li>
+  <li>길이 단위의 두 가지 주요 유형은 <code class="language-plaintext highlighter-rouge">absoluted</code>(절대적)과 <code class="language-plaintext highlighter-rouge">relative</code>(상대적)이 있다.</li>
+  <li><code class="language-plaintext highlighter-rouge">absolute</code>(절대적인) 단위는 물리적은 길이 단위로 <code class="language-plaintext highlighter-rouge">in</code>과 <code class="language-plaintext highlighter-rouge">mm</code>으로 각각 인치 및 밀리미터를 제공한다. 절대 길이 단위는 실제 측정값과 비슷하지만, 화면의 해상도에 따라 약간의 차이가 있다.</li>
+  <li><code class="language-plaintext highlighter-rouge">relative</code>(상대적) 단위는 <code class="language-plaintext highlighter-rouge">em</code> 또는 <code class="language-plaintext highlighter-rouge">rem</code>으로 <code class="language-plaintext highlighter-rouge">em</code>은 요소의 글꼴의 크기를 기반으로 한다. 예를 들어, <code class="language-plaintext highlighter-rouge">font-size</code> 속성을 사용하면 부모의 <code class="language-plaintext highlighter-rouge">font-size</code> 속성과 관련이 있다.</li>
+</ul>
+
+<h2 id="css-상속">CSS 상속</h2>
+
+<ul>
+  <li>모든 HTML페이지에는 <code class="language-plaintext highlighter-rouge">body</code> 요소가 있고, 스타일을 지정하면 다른 모든 요소가 스타일을 상속한다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="nb">monospace</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>
+    Hello World
+<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<h2 id="스타일링-우선순위">스타일링 우선순위</h2>
+
+<ul>
+  <li>때로는 HTML 요소가 서로 충돌하는 여러 스타일을 수신 할 수 있다.</li>
+  <li>브라우저는 선언 순서대로 CSS를 위에서 아래로 읽는다.</li>
+  <li>즉, 충돌이 발생하면 브라우저는 마지막에 온 CSS 선언을 사용한다.</li>
+  <li>그런데, 요소에 id를 부여하면 id에 대한 스타일링이 우선시 된다.</li>
+  <li>그리고 id 보다는 inline 스타일링 우선시 된다.</li>
+  <li>하지만 가장 강력한 방법은 <code class="language-plaintext highlighter-rouge">!important</code> 이다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+    <span class="nl">font-family</span><span class="p">:</span> <span class="nb">monospace</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nf">#orange-text</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.pink-text</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">pink</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.blue-text</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1</span> <span class="na">class=</span><span class="s">"pink-text blue-text"</span><span class="nt">&gt;</span>
+    Blue
+<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"orange-text"</span> <span class="na">class=</span><span class="s">"pink-text blue-text"</span><span class="nt">&gt;</span>
+    Orange
+<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h1</span> <span class="na">id=</span><span class="s">"orange-text"</span> <span class="na">class=</span><span class="s">"pink-text blue-text"</span> <span class="na">style=</span><span class="s">"color:white"</span><span class="nt">&gt;</span>
+    White
+<span class="nt">&lt;/h1&gt;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>!important &gt; inline &gt; id &gt; 마지막에 온 선언</p>
+</blockquote>
+
+<h2 id="16진수-코드를-사용하여-색상-표현">16진수 코드를 사용하여 색상 표현</h2>
+
+<ul>
+  <li>CSS에서 색상을 표현하는 방법으로 16진수 코드를 사용한다.</li>
+  <li>예를들어 <code class="language-plaintext highlighter-rouge">#000000</code> 은 검은색이다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">body</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="m">#000000</span><span class="p">;</span> <span class="c">/* black */</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="16진수-코드를-사용하여-색상-혼합">16진수 코드를 사용하여 색상 혼합</h2>
+
+<ul>
+  <li>16진수 코드는 6개의 16진수 숫자를 사용하여 각각 2개의 빨강(R). 녹색(G), 파랑(B)의 구성요소로 색상을 나타낸다.</li>
+  <li>이 세 가지 순수한 색상(빨강, 녹색, 파랑)은 각각의 양을 변화 시켜서 1600만개 이상의 다른 색상을 만들 수 있다.</li>
+  <li>예를들어, 주황색은 순수한 빨강이며, 녹색과 섞여 있고 파랑은 없다. 16진수로는 <code class="language-plaintext highlighter-rouge">#ffa500</code></li>
+  <li>숫자 <code class="language-plaintext highlighter-rouge">0</code>은 16진수 코드에서 가장 낮은 숫자이며 색상이 완전히 없음을 나타낸다.</li>
+  <li>숫자 <code class="language-plaintext highlighter-rouge">f</code>는 16진수 코드에서 가장 높은 숫자이며 가능한 최대 밝기를 나타낸다.</li>
+</ul>
+
+<h2 id="축약된-16진수-코드-사용하기">축약된 16진수 코드 사용하기</h2>
+
+<ul>
+  <li>1600만 가지의 넘는 색상의 16진수 코드를 기억하기는 어렵다.</li>
+  <li>16진수 코드는 단축 할 수 있다.</li>
+  <li>빨간색 #FF0000 은 #F00으로 단축 된다.</li>
+  <li>이 단축된 양식은 한 자리는 빨간색, 한 자리는 녹색, 한 자리는 파란색을 나타낸다.</li>
+  <li>이렇게 약 4000개의 색상을 나타낼 수 있다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>Short Hex Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cyan</td>
+      <td>#0ff</td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>#0f0</td>
+    </tr>
+    <tr>
+      <td>Red</td>
+      <td>#f00</td>
+    </tr>
+    <tr>
+      <td>Fuchsia</td>
+      <td>#f0f</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="rgb값을-사용하여-색상-표현">RGB값을 사용하여 색상 표현</h2>
+
+<ul>
+  <li>CSS에서 색상을 표현할 수 있는 또 다른 방법은 <code class="language-plaintext highlighter-rouge">RGB</code> 값을 사용 하는 것이다.</li>
+  <li>검은색은 <code class="language-plaintext highlighter-rouge">rgb(0, 0, 0)</code> 이다.</li>
+  <li>흰색은 <code class="language-plaintext highlighter-rouge">rgb(255, 255, 255)</code> 이다.</li>
+  <li>16진수 코드에서와 같이 6개의 16진수를 사용하는 대신 <code class="language-plaintext highlighter-rouge">RGB</code> 0과 255사이의 숫자로 각 색상의 밝기를 지정한다.</li>
+  <li>한 색상의 두 자리 숫자가 16곱하기 16으로 총 256개의 값이 제공된다.</li>
+  <li>따라서 <code class="language-plaintext highlighter-rouge">RGB</code>와 16진수 코드는 정확히 같은 수의 색상을 나타낸다.</li>
+</ul>
+
+<h2 id="rgb값을-사용하여-색상-혼합">RGB값을 사용하여 색상 혼합</h2>
+
+<ul>
+  <li>16진수 코드와 마찬가지로 서로 다른 값을 조합하여 RGB로 색상을 혼합할 수 있다.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Color</th>
+      <th>RGB</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Blue</td>
+      <td>rgb(0, 0, 255)</td>
+    </tr>
+    <tr>
+      <td>Red</td>
+      <td>rgb(255, 0, 0)</td>
+    </tr>
+    <tr>
+      <td>Orchid</td>
+      <td>rgb(218, 112, 214)</td>
+    </tr>
+    <tr>
+      <td>Sienna</td>
+      <td>rgb(160, 82, 45)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="커스텀-css-변수-만들기">커스텀 CSS 변수 만들기</h2>
+
+<ul>
+  <li>앞에 두 개의 하이픈이 있는 이름으로 지정하고 값을 지정한다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#app</span> <span class="p">{</span>
+    <span class="py">--primary</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+    <span class="py">--success</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+    <span class="py">--warning</span><span class="p">:</span> <span class="no">yellow</span><span class="p">;</span>
+    <span class="py">--danger</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="커스텀-css-변수-사용하기">커스텀 CSS 변수 사용하기</h2>
+
+<ul>
+  <li>변수를 만든 후에는 지정한 이름을 참조하여 다른 CSS 속성에 해당 값을 할당 할 수 있다.</li>
+  <li>지정된 변수가 유효하지 않은 경우 브라우저에서 되돌릴 fallback 값을 설정 할 수 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.primary-color</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--primary</span><span class="p">,</span> <span class="m">#00f</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.success-color</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--success</span><span class="p">,</span> <span class="m">#0f0</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.warning-color</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--warning</span><span class="p">,</span> <span class="m">#ff0</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nc">.danger-color</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--danger</span><span class="p">,</span> <span class="m">#f00</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="css변수의-브라우저-호환성-문제">CSS변수의 브라우저 호환성 문제</h2>
+
+<ul>
+  <li>CSS로 작업 할 때 브라우저 호환성 문제가 발생 할 수 있다. 잠재적인 문제를 피하기 위해 브라우저 fallback 을 제공하는 것이 중요하다.</li>
+  <li>브라우저가 웹 페이지의 CSS를 구문 분석할 때 인식하지 않거나 지원하지 않는 속성은 무시한다.</li>
+  <li>예를 들어 CSS변수를 사용하여 사이트에 배경색을 지정하면 Internet Explorer는 CSS변수를 지원하지 않으므로 배경색을 무시한다. 이 경우 브라우저는 해당 속성에 대한 값을 사용하고 다른 값을 찾을 수 없으면 기본값으로 되돌린다.</li>
+  <li>즉, 브라우저 fallback 을 제공하려는 경우 선언 직전에 더 널리 지원되는 다른 값을 제공하는 것이 좋다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:root</span> <span class="p">{</span>
+    <span class="py">--background-color</span><span class="p">:</span> <span class="m">#dfdfdf</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.container</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--background-color</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="css-변수-상속">CSS 변수 상속</h2>
+
+<ul>
+  <li>변수를 작성 할 때 변수를 작성하는 선택기에서 사용 할 수 있고, 해당 선택기의 모든 하위항목에서도 사용 할 수 있다.</li>
+  <li>이는 일반적인 속성과 마찬가지로 CSS변수가 상속되기 때문에 발생한다.</li>
+  <li>상속을 사용하기 위해 CSS변수는 종종 :root 요소에 정의된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">:root</code>는 문서의 루트요소, 일반적인 html 와 일치하는 <strong>pseudo-class</strong> 선택기다.</li>
+  <li><code class="language-plaintext highlighter-rouge">:root</code>에서 변수를 작성하면 전역으로 사용하능 하며 스타일 시트의 다른 선택기에서 접근 할 수 있다.</li>
+  <li><code class="language-plaintext highlighter-rouge">:root</code>에 작성한 변수를 특정 요소내에서 다시 설정하여 덮어 쓸 수도 있다.</li>
+</ul>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:root</span><span class="o">:</span> <span class="p">{</span>
+    <span class="py">--background-color</span><span class="p">:</span> <span class="m">#dfdfdf</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.container</span> <span class="p">{</span>
+    <span class="py">--background-color</span><span class="p">:</span> <span class="m">#efefef</span><span class="p">;</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--background-color</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="미디어-쿼리에서-css-변수-활용-하기">미디어 쿼리에서 CSS 변수 활용 하기</h2>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:root</span> <span class="p">{</span>
+    <span class="py">--size</span><span class="p">:</span> <span class="m">300px</span><span class="p">;</span>
+
+<span class="p">}</span>
+<span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">350px</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nd">:root</span> <span class="p">{</span>
+        <span class="py">--size</span><span class="p">:</span> <span class="m">200px</span><span class="p">;</span>
+    <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#css" class="page__taxonomy-item" rel="tag">CSS</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/css" class="page__taxonomy-item" rel="tag">CSS</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-03-13T00:00:00+09:00">March 13, 2020</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2020/02/02/how-to-private-npm/" class="pagination--pager" title="비공개 NPM 저장소 구성하기
+">Previous</a>
+    
+    
+      <a href="/blog/2020/03/16/error-report-ie11-script1002/" class="pagination--pager" title="IE 11 Syntax Error - Script1002
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

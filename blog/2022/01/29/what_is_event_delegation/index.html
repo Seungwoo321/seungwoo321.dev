@@ -1,0 +1,788 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>이벤트 위임(Event Delegation) - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="이벤트 위임이란  DOM의 이벤트 버블링(Event Bubbling) 특성을 활용해 이벤트 리스너를 하위 요소에 추가하는 대신 상위 요소에 추가하는 기법입니다.  다음과 같은 이점이 있습니다.     각 하위 항목에 이벤트 핸들러를 연결하지 않고 상위의 단일 요소에만 핸들러가 필요하기 때문에 메모리 사용 공간이 줄어듭니다.   제거된 요소에서 핸들러를 해제하고 새 요소에 대해 이벤트를 바인딩 할 필요가 없습니다.      표준 DOM 이벤트에서 정의한 이벤트 흐름은 캡처링 단계 → 타깃 단계 → 버블링 단계의 3가지 단계가 있습니다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="이벤트 위임(Event Delegation)">
+<meta property="og:url" content="/blog/2022/01/29/what_is_event_delegation/">
+
+
+  <meta property="og:description" content="이벤트 위임이란  DOM의 이벤트 버블링(Event Bubbling) 특성을 활용해 이벤트 리스너를 하위 요소에 추가하는 대신 상위 요소에 추가하는 기법입니다.  다음과 같은 이점이 있습니다.     각 하위 항목에 이벤트 핸들러를 연결하지 않고 상위의 단일 요소에만 핸들러가 필요하기 때문에 메모리 사용 공간이 줄어듭니다.   제거된 요소에서 핸들러를 해제하고 새 요소에 대해 이벤트를 바인딩 할 필요가 없습니다.      표준 DOM 이벤트에서 정의한 이벤트 흐름은 캡처링 단계 → 타깃 단계 → 버블링 단계의 3가지 단계가 있습니다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-01-29T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2022/01/29/what_is_event_delegation/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="이벤트 위임(Event Delegation)">
+    <meta itemprop="description" content="이벤트 위임이란DOM의 이벤트 버블링(Event Bubbling) 특성을 활용해 이벤트 리스너를 하위 요소에 추가하는 대신 상위 요소에 추가하는 기법입니다.다음과 같은 이점이 있습니다.  각 하위 항목에 이벤트 핸들러를 연결하지 않고 상위의 단일 요소에만 핸들러가 필요하기 때문에 메모리 사용 공간이 줄어듭니다.  제거된 요소에서 핸들러를 해제하고 새 요소에 대해 이벤트를 바인딩 할 필요가 없습니다.  표준 DOM 이벤트에서 정의한 이벤트 흐름은 캡처링 단계 → 타깃 단계 → 버블링 단계의 3가지 단계가 있습니다.">
+    <meta itemprop="datePublished" content="2022-01-29T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">이벤트 위임(Event Delegation)
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-01-29T00:00:00+09:00">January 29, 2022</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#이벤트-위임이란">이벤트 위임이란</a></li><li><a href="#이벤트-버블링event-bubbling">이벤트 버블링(Event Bubbling)</a></li><li><a href="#이벤트-캡쳐event-capture">이벤트 캡쳐(Event Capture)</a><ul><li><a href="#eventstoppropagation">event.stopPropagation()</a></li></ul></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="이벤트-위임이란">이벤트 위임이란</h2>
+
+<p>DOM의 <strong>이벤트 버블링(Event Bubbling)</strong> 특성을 활용해 이벤트 리스너를 하위 요소에 추가하는 대신 상위 요소에 추가하는 기법입니다.</p>
+
+<p>다음과 같은 이점이 있습니다.</p>
+
+<ul>
+  <li>각 하위 항목에 이벤트 핸들러를 연결하지 않고 상위의 단일 요소에만 핸들러가 필요하기 때문에 메모리 사용 공간이 줄어듭니다.</li>
+  <li>제거된 요소에서 핸들러를 해제하고 새 요소에 대해 이벤트를 바인딩 할 필요가 없습니다.</li>
+</ul>
+
+<blockquote>
+  <p>표준 DOM 이벤트에서 정의한 이벤트 흐름은 <strong>캡처링 단계 → 타깃 단계 → 버블링 단계</strong>의 3가지 단계가 있습니다.</p>
+</blockquote>
+
+<!--more-->
+
+<ul>
+  <li>예제</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+<span class="c1">// 상위 요소에 이벤트 핸들러를 등록한다 </span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">parent-list</span><span class="dl">"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+ <span class="c1">// li를 클릭 하면 버블링으로 최상단 부모요소인 document 까지 전파되된다.</span>
+ <span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">==</span> <span class="dl">"</span><span class="s2">LI</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">List item </span><span class="dl">"</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">"</span><span class="s2">post-</span><span class="dl">"</span><span class="p">,</span> <span class="dl">""</span><span class="p">),</span> <span class="dl">"</span><span class="s2"> was clicked!</span><span class="dl">"</span><span class="p">);</span>
+ <span class="p">}</span>
+<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+ <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"parent-list"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-1"</span><span class="nt">&gt;</span>Item 1<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-2"</span><span class="nt">&gt;</span>Item 2<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-3"</span><span class="nt">&gt;</span>Item 3<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-4"</span><span class="nt">&gt;</span>Item 4<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-5"</span><span class="nt">&gt;</span>Item 5<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;li</span> <span class="na">id=</span><span class="s">"post-6"</span><span class="nt">&gt;</span>Item 6<span class="nt">&lt;/li&gt;</span>
+ <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+
+<h2 id="이벤트-버블링event-bubbling">이벤트 버블링(Event Bubbling)</h2>
+
+<p>특정 요소에서 이벤트가 발생했을 때 상위로 전파되는 특성으로 상위 요소에 할당된 이벤트 핸들러가 호출됩니다.</p>
+
+<p>event.target은 실제 클릭한 요소를 가리키고 event.currentTarget 은 버블링으로 전파되어 핸들러가 동작한 요소를 가리킵니다.</p>
+
+<h2 id="이벤트-캡쳐event-capture">이벤트 캡쳐(Event Capture)</h2>
+
+<p>이벤트 버블링과 반대 방향으로 이벤트가 발생한 요소에서 하위 요소로 이벤트가 전파되는 것으로, addEventListener() API에서 세 번째 인자 값인 options 객체에 capture: true를 설정하면 최상위 조상에서 하위 요소로 전파되는 캡처링 단계에서 이벤트 핸들러가 호출됩니다.</p>
+
+<ul>
+  <li>addEventListener의 세 번째 인자 options
+    <ul>
+      <li>이전에는 addEventListener 세 번째 인자 값이 캡쳐의 사용 여부를 나타내는 Boolean 값이었으나 더 많은 옵션이 필요하게 되어 다양한 옵션을 포함하는 객체로 변경되었습니다.</li>
+      <li>지원되는 옵션에는 capture 외에 once (한 번만 호출, Boolean), passive (preventDefault()를 호출하지 않음, Boolean), mozSystemGroup (listener를 시스템 그룹에 추가해야 함, Boolean, 오직 XBL, 파이어폭스 브라우저의 chrome - 구글 크롬 아님에서 실행되는 코드에서만 사용할 수 있음) 가 있습니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="eventstoppropagation">event.stopPropagation()</h3>
+
+<p>이벤트 전파를 막습니다.</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://davidwalsh.name/event-delegate">https://davidwalsh.name/event-delegate</a></li>
+  <li><a href="http://event.target">event.target</a></li>
+  <li><a href="https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener">EventTarget.addEventListener - MDN</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#frontend" class="page__taxonomy-item" rel="tag">Frontend</a><span class="sep">, </span>
+    
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/web" class="page__taxonomy-item" rel="tag">Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-29T00:00:00+09:00">January 29, 2022</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2022/01/28/making-trading-bot-4/" class="pagination--pager" title="트레이딩 봇 2.0 개발 후기
+">Previous</a>
+    
+    
+      <a href="/blog/2022/01/30/event_listener_this/" class="pagination--pager" title="이벤트 핸들러 내부의 this
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

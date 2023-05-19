@@ -1,0 +1,760 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="처음에는 막막하기만 했던 기본 캔들 데이터 생성을 인플럭스DB (InfluxDB)를 사용해서 쉽게 구현할 수 있었다. 다음은 언제 사고 언제 파는 게 좋을지를 과거 데이터를 통해 시뮬레이션 해보기 위해서 거래소에서 제공하는 REST API를 통해서 2017년부터 현재까지의 캔들 데이터를 인플럭스DB에 수집하는 스크립트를 노드 (node.js)로 작성했다. 증권 거래소와 달리 암호화폐 거래소는 REST API를 지원하므로 웹 개발자로서는 접근이 훨씬 용이해서 실전 봇 까지 바로 진행할 수 있었다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월">
+<meta property="og:url" content="/blog/2021/06/07/making-trading-bot-3/">
+
+
+  <meta property="og:description" content="처음에는 막막하기만 했던 기본 캔들 데이터 생성을 인플럭스DB (InfluxDB)를 사용해서 쉽게 구현할 수 있었다. 다음은 언제 사고 언제 파는 게 좋을지를 과거 데이터를 통해 시뮬레이션 해보기 위해서 거래소에서 제공하는 REST API를 통해서 2017년부터 현재까지의 캔들 데이터를 인플럭스DB에 수집하는 스크립트를 노드 (node.js)로 작성했다. 증권 거래소와 달리 암호화폐 거래소는 REST API를 지원하므로 웹 개발자로서는 접근이 훨씬 용이해서 실전 봇 까지 바로 진행할 수 있었다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-06-07T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2021/06/07/making-trading-bot-3/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월">
+    <meta itemprop="description" content="처음에는 막막하기만 했던 기본 캔들 데이터 생성을 인플럭스DB (InfluxDB)를 사용해서 쉽게 구현할 수 있었다. 다음은 언제 사고 언제 파는 게 좋을지를 과거 데이터를 통해 시뮬레이션 해보기 위해서 거래소에서 제공하는 REST API를 통해서 2017년부터 현재까지의 캔들 데이터를 인플럭스DB에 수집하는 스크립트를 노드 (node.js)로 작성했다. 증권 거래소와 달리 암호화폐 거래소는 REST API를 지원하므로 웹 개발자로서는 접근이 훨씬 용이해서 실전 봇 까지 바로 진행할 수 있었다.">
+    <meta itemprop="datePublished" content="2021-06-07T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2021-06-07T00:00:00+09:00">June 7, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#시뮬레이션">시뮬레이션</a></li><li><a href="#오픈소스-기여--타입스크립트">오픈소스 기여 &amp; 타입스크립트</a></li><li><a href="#트레이딩-봇-실전-6개월">트레이딩 봇 실전 6개월</a></li><li><a href="#마무리">마무리</a></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>처음에는 막막하기만 했던 기본 캔들 데이터 생성을 인플럭스DB (InfluxDB)를 사용해서 쉽게 구현할 수 있었다. 다음은 언제 사고 언제 파는 게 좋을지를 과거 데이터를 통해 시뮬레이션 해보기 위해서 거래소에서 제공하는 REST API를 통해서 2017년부터 현재까지의 캔들 데이터를 인플럭스DB에 수집하는 스크립트를 노드 (node.js)로 작성했다. 증권 거래소와 달리 암호화폐 거래소는 REST API를 지원하므로 웹 개발자로서는 접근이 훨씬 용이해서 실전 봇 까지 바로 진행할 수 있었다.</p>
+
+<!--more-->
+
+<h2 id="시뮬레이션">시뮬레이션</h2>
+
+<p>데이터 분석에는 파이썬(Python) 언어를 많이 사용하기 때문에 잠깐의 고민도 있었지만 익숙한 노드를 선택했다. 데이터 조작 및 분석을 위해 파이썬의 Pandas와 같은 라이브러리로 Data-Forge와 이 Data-Forge를 기반으로 알고리즘 거래의 백테스팅을 위한 API를 제공하는 툴킷 grademark를 사용했다.</p>
+
+<p><img src="/assets/images/posts/2021/06/07/backtest.png" alt="backtext" /></p>
+
+<p>2017년 1월부터 2020년 10월까지의 비트코인 차트에 이동 평균선(Moving Average), 스토캐스틱(Stochastic), 볼린저 밴드(Bollinger Band) 지표를 사용해서 조건을 이리저리 바꿔가며 다양하게 알고리즘을 시험해 보았다.</p>
+
+<h2 id="오픈소스-기여--타입스크립트">오픈소스 기여 &amp; 타입스크립트</h2>
+
+<p>지난번 웹에서 캔들 스틱 차트의 지표를 그릴 때는 tvjsx/trading-vue-js 라이브러리를 그대로 사용했지만 이번에는 Data-Forge 기반으로 하는 data-forge-indicators 라이브러리를 사용했다.</p>
+
+<p>차트의 기술적 분석을 트레이드 스터디에서 주로 스토케스틱을 활용한 기법을 배워서 매매 알고리즘 작성에 반드시 필요한 지표 중 하나인데 이 라이브러리에서 지원하지 않았다. 그래서 스토케스틱 지표를 계산하는 함수를 직접 추가하고 PR을 작성했다.</p>
+
+<p><img src="/assets/images/posts/2021/06/07/stochastic.png" alt="stochastic" /></p>
+
+<p>직접 만들어서 관리하는 것 외에 처음으로 기여해 본 오픈소스 프로젝트이고 타입 스크립트도 처음 사용해 본 경험 이어서 아주 의미 있는 활동이었다.</p>
+
+<h2 id="트레이딩-봇-실전-6개월">트레이딩 봇 실전 6개월</h2>
+
+<p>시뮬레이션에서 사용한 grademark 라이브러리의 로직은 과거 데이터를 가지고 거래를 가정하는 데 매매 조건을 충족해도 바로 거래하지 않는다. 매매해야 된다고 기억했다가 다음 캔들에서 매매를 한다. 반면 직접 거래소와 통신하며 사고팔도록 동작하는 봇은 별도의 상태값을 저장하는 데이터베이스를 두지 않으려고 즉시 거래가 되도록 개발했다. 결과 시뮬레이션과는 많은 차이를 보였다.</p>
+
+<p><img src="/assets/images/posts/2021/06/07/profit1.png" alt="profit1" />
+<img src="/assets/images/posts/2021/06/07/profit2.png" alt="profit2" />
+<img src="/assets/images/posts/2021/06/07/profit3.png" alt="profit3" /></p>
+
+<p>시뮬레이션과 차이를 보이면서 실제 매매 환경에서 알고리즘을 개선해나갔고 시장의 상황에 따라서 수익이 나기도 했지만 지속적인 유지 보수와 리스크 관리가 필요했다.</p>
+
+<h2 id="마무리">마무리</h2>
+
+<p>매매 알고리즘을 테스트하고 더 나은 알고리즘을 적용하는 것의 의미를 두기 위해 실전 매매와 시뮬레이션 환경이 최대한 비슷하게 동작하도록 개선이 필요해 보인다.
+어느 한쪽을 수정해서 두 매매 환경의 차이를 좁히면 되지 않을까 싶다.</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://github.com/data-forge/data-forge-ts">Data Forge</a></li>
+  <li><a href="https://github.com/data-forge/data-forge-indicators">data-forge-indicators</a></li>
+  <li><a href="https://github.com/grademark/grademark">grademark</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#trading-bot" class="page__taxonomy-item" rel="tag">Trading Bot</a><span class="sep">, </span>
+    
+      <a href="/tags/#typescript" class="page__taxonomy-item" rel="tag">TypeScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/quant" class="page__taxonomy-item" rel="tag">Quant</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-06-07T00:00:00+09:00">June 7, 2021</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2021/05/20/making-trading-bot-2/" class="pagination--pager" title="InfluxDB를 활용한 주식차트 만들기
+">Previous</a>
+    
+    
+      <a href="/blog/2021/07/31/what_closure_means/" class="pagination--pager" title="클로저(Closure)는 무엇이며, 어떻게/왜 사용하나요 ?
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

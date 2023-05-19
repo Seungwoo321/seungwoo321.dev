@@ -1,0 +1,811 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시">
+<meta property="og:url" content="/blog/2023/03/28/big-decimal-and-e-notation/">
+
+
+  <meta property="og:description" content="AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-03-28T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2023/03/28/big-decimal-and-e-notation/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시">
+    <meta itemprop="description" content="AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.">
+    <meta itemprop="datePublished" content="2023-03-28T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#부동-소수점-타입과-빅-데시멀">부동 소수점 타입과 빅 데시멀</a><ul><li><a href="#부동-소수점-타입">부동 소수점 타입</a></li><li><a href="#부동-소수점의-한계">부동 소수점의 한계</a></li><li><a href="#빅-데시멀">빅 데시멀</a></li></ul></li><li><a href="#지수-표기법">지수 표기법</a><ul><li><a href="#e-지수로-표현되는-기준">e 지수로 표현되는 기준</a></li></ul></li><li><a href="#결론">결론</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+<!--more--></p>
+
+<h2 id="부동-소수점-타입과-빅-데시멀">부동 소수점 타입과 빅 데시멀</h2>
+
+<h3 id="부동-소수점-타입">부동 소수점 타입</h3>
+
+<p>부동 소수점 타입은 IEEE 754 표준에 따라 일반적으로 내부적으로 2진수로 저장됩니다. 이진수로 저장하면 정확하게 표현할 수 없는 소수점 위치가 발생해 오차가 발생할 수 있습니다. 예를 들어 <code class="language-plaintext highlighter-rouge">0.1</code>을 더블(Double) 타입으로 표현하면 <code class="language-plaintext highlighter-rouge">0.1</code>이 아니라 <code class="language-plaintext highlighter-rouge">0.1000000000000000055511151231257827021181583404541015625</code>와 같이 표현 될 수 있습니다.</p>
+
+<h3 id="부동-소수점의-한계">부동 소수점의 한계</h3>
+
+<p>부동 소수점의 이러한 오차는 일반적으로 작은 범위에서 무시할 만한 수준이지만 계산이 계속해서 이어지면서 쌓이게 되면 결국 오차가 누적되어서 결과값이 크게 차이나게 될 수 있습니다.</p>
+
+<p>특히 큰 값을 다룰 때는 오차가 누적되어 부동소수점의 한계로 인한 계산 문제가 더 많이 발생하기 때문에 정밀한 계산이 필요한 경우에는 부동소수점 타입을 사용하지 않는 것이 좋습니다.</p>
+
+<h3 id="빅-데시멀">빅 데시멀</h3>
+
+<p>자바에서는 부동 소수점의 한계를 극복하기 위해 일반적인 부동 소수점 타입과는 구분되는 Java 표준의 빅 데시멀(Big Decimal)이라는 타입이 제공됩니다. 빅 데시멀은 내부적으로 십진수로 변환하여 저장하기 때문에 0.1은 0.1이라고 저장합니다. 따라서 부동 소수점의 한계로 발생하는 오차를 줄일 수 있어서 정확한 계산을 보장합니다. 하지만 빅 데시멀은 부동소수점에 비해 느리고 메모리 사용량도 더 많기 때문에 큰 데이터셋을 다루는 경우에는 성능상 이슈가 될 수 있습니다.</p>
+
+<blockquote>
+  <p>빅 데시멀은 자바에서 제공하는 부동 소수점 타입으로, IEEE 754 표준을 따르는 일반적인 부동 소수점 타입과는 구분됩니다.</p>
+</blockquote>
+
+<h2 id="지수-표기법">지수 표기법</h2>
+
+<p>너무 크거나 작은 숫자의 데이터를 보면 숫자에 e가 표함된 지수 표기식 데이터를 받는 경우가 있습니다. 이는 “지수 표기법” 또는 “과학적 표기법” 이라고도 하며 보통 숫자 다음에 e와 함께 지수를 표기합니다. 예를 들어, <code class="language-plaintext highlighter-rouge">1,000,000</code>은 <code class="language-plaintext highlighter-rouge">1.0e+6</code>으로 표기될 수 있습니다.</p>
+
+<h3 id="e-지수로-표현되는-기준">e 지수로 표현되는 기준</h3>
+
+<p>일반적으로 IEEE 754 표준을 따르는 더블 타입은 1e-16 이하 또는 1e+16 이상인 대략적으로 16자리 이상인 경우 e 지수 형태로 표기될 가능성이 높습니다. 하지만 이는 숫자 타입의 구현 방식과 사용되는 언어나 프로그램에 따라 다를 수 있으므로 정확한 기준은 없습니다. 빅 데시멀의 경우에는 소수점 이하 6자리 이상일 때 e 지수 형태로 표기됩니다.</p>
+
+<ul>
+  <li>Java: 더블 타입의 경우 <code class="language-plaintext highlighter-rouge">4.9e-324</code>(10의 -324승) 미만 또는 <code class="language-plaintext highlighter-rouge">1.79769e+308</code>(10의 308승) 초과 이거나 16자리 이상인 경우</li>
+  <li>Python: 더블 타입의 경우 <code class="language-plaintext highlighter-rouge">2.22507e-308</code>(10의 -308승) 미만 또는 <code class="language-plaintext highlighter-rouge">1.79769e+308</code>(10의 308승) 초과 이거나 16자리 이상인 경우</li>
+  <li>JavaScript/Node.js: V8엔진을 기반으로 동작하며 <code class="language-plaintext highlighter-rouge">5e-324</code>(10의 -324승) 미만 또는 <code class="language-plaintext highlighter-rouge">1.8e+308</code>(10의 308승) 초과 이거나 16자리 이상인 경우</li>
+</ul>
+
+<p>자바에서 e 지수로 표기될 가능성이 있는 더블 타입의 일부 숫자 예시입니다.</p>
+
+<ul>
+  <li>4.9e-324</li>
+  <li>1.7976931348623157e+308</li>
+  <li>1.0000000000000002e-14</li>
+  <li>9.999999999999998e+15</li>
+  <li>1.0000000000000001e+16</li>
+  <li>9.223372036854776e+18</li>
+  <li>1.2345678901234567e+18</li>
+  <li>9.999999999999997e+18</li>
+  <li>1.2345678901234567e+19</li>
+  <li>9.999999999999998e+19</li>
+  <li>1.2345678901234567e+20</li>
+  <li>9.999999999999998e+20</li>
+  <li>1.2345678901234567e+21</li>
+</ul>
+
+<p>다음은 보다 짧은 자릿수에도 e 지수 표기법으로 표현되는 빅 데시멀 타입의 일부 숫자 예시입니다.</p>
+
+<ul>
+  <li>1.234567e-4</li>
+  <li>9.8765432e+5</li>
+  <li>1.23e-8</li>
+  <li>9.87e-10</li>
+  <li>7.654321e+5</li>
+  <li>9.87654e-4</li>
+  <li>1.23456789e+8</li>
+  <li>3.21e-9</li>
+  <li>4.321e+3</li>
+  <li>7.89e-9</li>
+</ul>
+
+<h2 id="결론">결론</h2>
+
+<p>소수점 이하 자릿수가 중요한 분야에서 백엔드가 자바로 작성되어 있다면 빅 데시멀 타입을 주로 사용하게 될 것입니다. 위의 e 지수 표기법으로 표현되는 숫자 예시처럼 빅 데시멀은 더블 타입보다 소수점 이하 자릿수가 적은 숫자에서도 e 지수 형태로 표기되므로 소수점 표기 변환이 필요한 경우가 더 많이 발생 할 것입니다.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">rate</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">indexOf</span><span class="p">(</span><span class="dl">'</span><span class="s1">e-</span><span class="dl">'</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">points</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">rate</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">e-</span><span class="dl">'</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">decimal</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">points</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">{</span>
+        <span class="nx">decimal</span> <span class="o">+=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">points</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">).</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">decimal</span> <span class="o">+=</span> <span class="nx">points</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">.</span><span class="dl">'</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nx">length</span>
+    <span class="p">}</span>
+    <span class="nx">item</span><span class="p">.</span><span class="nx">rate</span> <span class="o">=</span> <span class="nx">item</span><span class="p">.</span><span class="nx">rate</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="nx">decimal</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="nx">item</span>
+</code></pre></div></div>
+
+<p>이 코드는 소수점 이하 자릿수가 큰 데이터에서 e 지수 형태로 표기될 가능성이 있는 숫자를 소수점 형태로 변환하기 위해 작성한 코드입니다. 먼저 indexOf 메소드를 이용하여 해당 숫자가 e-를 포함하고 있는지를 검사하고, split 메소드를 이용하여 e-를 기준으로 문자열을 분리합니다. 분리된 두 번째 요소에서 소수점 이하 자릿수를 추출하고 첫 번째 요소에서 split 메소드를 이용하여 정수부분과 소수점 이하 부분을 분리하여 소수점 이하 자릿수를 계산합니다. 계산된 소수점 이하 자릿수를 toFixed 메소드를 이용하여 소수점 자릿수를 맞춘 숫자로 변환하고 <code class="language-plaintext highlighter-rouge">item.rate</code>에 다시 할당합니다.</p>
+
+<p>예를 들어, <code class="language-plaintext highlighter-rouge">1.234567e-4</code>는 소수점 형태로 변환하면 <code class="language-plaintext highlighter-rouge">0.0001234567</code>입니다. 이렇게 e 지수 형태로 표현된 숫자를 소수점 형태로 변환하여 더욱 직관적으로 사용자가 이해할 수 있도록 했습니다.</p>
+
+<blockquote>
+  <p>결론적으로, 빅 데시멀과 지수 표기법은 부동 소수점 타입의 한계를 극복하기 위한 대안입니다. 백엔드에서 전달받은 데이터의 타입과 형태를 이해하고 적절한 처리를 수행하여 정확한 데이터 표현과 계산을 보장하는 것이 중요합니다. 프론트엔드 개발자는 이러한 이슈들을 고려하여 데이터 처리 및 표현 방법을 결정해야 하며, 데이터의 정확성과 사용자 경험을 고려하여 적절한 방법을 선택해야 합니다.</p>
+</blockquote>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#big-decimal" class="page__taxonomy-item" rel="tag">Big Decimal</a><span class="sep">, </span>
+    
+      <a href="/tags/#frontend" class="page__taxonomy-item" rel="tag">Frontend</a><span class="sep">, </span>
+    
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/javascript" class="page__taxonomy-item" rel="tag">JavaScript</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2023/03/08/boj-node-js/" class="pagination--pager" title="BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+">Previous</a>
+    
+    
+      <a href="/blog/2023/03/28/how-to-pwa-with-vue/" class="pagination--pager" title="오리진이 다른 리소스를 서비스워커로 캐싱하기
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/02/how-to-use-stack-and-queue-in-js/" rel="permalink">자바스크립트에서 큐와 스택 자료구조 구현하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-02T00:00:00+09:00">March 2, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">자료구조 및 알고리즘을 공부하면서 자주 사용되는 자료구조인 큐와 스택을 자바스크립트로 구현해보고 BOJ에서 문제를 풀어보면서 자바스크립트에서 어떻게 구현하고 활용하는 것이 유리한지 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

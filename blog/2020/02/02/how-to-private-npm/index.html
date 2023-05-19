@@ -1,0 +1,871 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>비공개 NPM 저장소 구성하기 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="오픈소스 Sinopia를 사용해서 Prvate NPM 저장소를 구성하고 스코프 문제를 해결한 경험을 정리하자.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="비공개 NPM 저장소 구성하기">
+<meta property="og:url" content="/blog/2020/02/02/how-to-private-npm/">
+
+
+  <meta property="og:description" content="오픈소스 Sinopia를 사용해서 Prvate NPM 저장소를 구성하고 스코프 문제를 해결한 경험을 정리하자.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-02T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2020/02/02/how-to-private-npm/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="비공개 NPM 저장소 구성하기">
+    <meta itemprop="description" content="오픈소스 Sinopia를 사용해서 Prvate NPM 저장소를 구성하고 스코프 문제를 해결한 경험을 정리하자.">
+    <meta itemprop="datePublished" content="2020-02-02T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">비공개 NPM 저장소 구성하기
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2020-02-02T00:00:00+09:00">February 2, 2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#설치-및-사용자-생성">설치 및 사용자 생성</a></li><li><a href="#백그라운드로-서비스-시작--종료">백그라운드로 서비스 시작 &amp; 종료</a></li><li><a href="#사용방법">사용방법</a></li><li><a href="#기본-환경-설정">기본 환경 설정</a></li><li><a href="#주요-이슈-및-해결">주요 이슈 및 해결</a><ul><li><a href="#이슈">이슈</a></li><li><a href="#원인">원인</a></li><li><a href="#해결">해결</a></li></ul></li><li><a href="#추가-설정">추가 설정</a></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>오픈소스 Sinopia를 사용해서 Prvate NPM 저장소를 구성하고 스코프 문제를 해결한 경험을 정리하자.
+<!--more--></p>
+
+<p><img src="/assets/images/posts/2020/02/02/npm-sinopia.png" alt="sinopia" /></p>
+
+<p>디자인 시스템을 목표로 한 Vue 프레임워크 기반의 UI 템플릿 <strong><code class="language-plaintext highlighter-rouge">Vuesign</code></strong>(Vue + Design의 합성어)을 만들었다.
+이 템플릿을 사용해서 여러 개의 웹 프로젝트가 진행될 예정이고 템플릿의 내용이 변경되면 당연히 각 웹 사이트에 변경사항이 배포가 되어야 한다.</p>
+
+<p>npm의 패키지 관리 장점을 그대로 사용하고 싶어서 별도의 비공개 NPM 저장소를 구축하려고 하는데 npm에서 제공하는 서비스는 비용 문제가 있어서 sinopia라는 오픈소스를 사용해서 구성했다.</p>
+
+<hr />
+
+<h2 id="설치-및-사용자-생성">설치 및 사용자 생성</h2>
+
+<p>상세한 내용은 <a href="https://github.com/rlidwka/sinopia">README</a>를 확인하자.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 글로벌로 패키지 설치</span>
+<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">-g</span> sinopia
+
+<span class="c"># 서비스 실행</span>
+<span class="nv">$ </span>sinopia
+
+<span class="c"># 사용자 생성  </span>
+<span class="nv">$ </span>npm adduser <span class="nt">--registry</span> http://localhost:4873/
+</code></pre></div></div>
+
+<blockquote>
+  <p>브라우저에서 <code class="language-plaintext highlighter-rouge">http://localhost:4873/</code> 혹은 외부 IP:4873 포트로 접속해서 위에서 생성한 사용자로 로그인해서 정상 설치 여부를 확인한다.</p>
+</blockquote>
+
+<h2 id="백그라운드로-서비스-시작--종료">백그라운드로 서비스 시작 &amp; 종료</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 로그 남기지 않고 백그라운드에서 실행하기</span>
+<span class="nv">$ </span><span class="nb">nohup </span>sinopia 1&gt;/dev/null 2&gt;&amp;1 &amp;
+
+<span class="c"># 종료하기</span>
+<span class="nv">$ </span>pkill <span class="nt">-9</span> sinopia
+</code></pre></div></div>
+
+<h2 id="사용방법">사용방법</h2>
+
+<ul>
+  <li>npm 환경설정의 registry를 변경하고 커맨드 사용</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 기존 설정 확인 &amp; 저장소 변경</span>
+<span class="nv">$ </span>npm config list
+<span class="nv">$ </span>npm <span class="nb">set </span>registry http://localhost:4873
+</code></pre></div></div>
+
+<ul>
+  <li>글로벌로 변경하지 않고 커맨드에 옵션을 추가하여 사용</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 옵션으로 사용</span>
+<span class="nv">$ </span>npm i <span class="nt">--registry</span> http://localhost:4873
+<span class="nv">$ </span>npm publish <span class="nt">--registry</span> http://localhost:4873
+</code></pre></div></div>
+
+<blockquote>
+  <p>깃허브 레포지토리의 README.md 문서에 작성되어 있는 사용 사례를 읽어 보면 <code class="language-plaintext highlighter-rouge">패키지의 프라이빗 한 저장소</code> 외에도 npmjs.org 레지스트리의 캐시 역할도 할 수 있다.</p>
+</blockquote>
+
+<h2 id="기본-환경-설정">기본 환경 설정</h2>
+
+<ul>
+  <li>설정 파일은 yaml 형식으로 작성된다.</li>
+  <li>default 내용은 <a href="https://github.com/rlidwka/sinopia/blob/master/conf/default.yaml">여기</a>에서 확인할 수 있다.</li>
+  <li>홈 디렉토리 하위의<code class="language-plaintext highlighter-rouge">.config/sinopia/config.ymal</code> 경로에 위치한다.</li>
+</ul>
+
+<h2 id="주요-이슈-및-해결">주요 이슈 및 해결</h2>
+
+<h3 id="이슈">이슈</h3>
+
+<p>최근 프론트엔드 프레임워크인 Vue.js, Angular, React를 살펴보면 스코프를 의미하는 @ 기호가 포함되어 있는 것을 볼 수 있는데 이렇게 @가 포함된 패키지를 다운로드 할 때는 패키지를 찾을 수 없다는 404 오류가 발생한다.</p>
+
+<h3 id="원인">원인</h3>
+
+<p>기본 설정 packages의 <code class="language-plaintext highlighter-rouge">@*/*</code>에는 프록시가 설정되어 있지 않고 로컬(프라이빗 저장소)에 해당 패키지가 존재하지 않을 경우에는 더 찾지 않는 것이다.</p>
+
+<p>이 오픈소스의 개발 당시인 약 5년 전에는 패키지의 이름에  @가 지금처럼 보편화되어 사용되지 않았고 프라이빗 한 비공개 패키지란 의미로 많이 쓰이다 보니 생긴 문제가 아닐까 싶다.</p>
+
+<h3 id="해결">해결</h3>
+
+<p>기본 설정 파일에서 <code class="language-plaintext highlighter-rouge">@*/*</code> 하위 레벨에 <code class="language-plaintext highlighter-rouge">proxy: npmjs</code> 을 추가해 주면 @ 기호가 포함된 패키지를 로컬(프라이빗 저장소)에서 찾지 못하더라도 <code class="language-plaintext highlighter-rouge">npmjs</code>저장소까지 탐색해서 정상적으로 패키지를 다운로드할 수 있게 된다.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
+<span class="c1"># This is the default config file. It allows all users to do anything,</span>
+<span class="c1"># so don't use it on production systems.</span>
+<span class="c1">#</span>
+<span class="c1"># Look here for more config file examples:</span>
+<span class="c1"># https://github.com/rlidwka/sinopia/tree/master/conf</span>
+<span class="c1">#</span>
+
+<span class="c1"># path to a directory with all packages</span>
+<span class="na">storage</span><span class="pi">:</span> <span class="s">./storage</span>
+
+<span class="na">auth</span><span class="pi">:</span>
+  <span class="na">htpasswd</span><span class="pi">:</span>
+    <span class="na">file</span><span class="pi">:</span> <span class="s">./htpasswd</span>
+    <span class="c1"># Maximum amount of users allowed to register, defaults to "+inf".</span>
+    <span class="c1"># You can set this to -1 to disable registration.</span>
+    <span class="c1">#max_users: 1000</span>
+
+<span class="c1"># a list of other known repositories we can talk to</span>
+<span class="na">uplinks</span><span class="pi">:</span>
+  <span class="na">npmjs</span><span class="pi">:</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s">https://registry.npmjs.org/</span>
+
+<span class="na">packages</span><span class="pi">:</span>
+  <span class="s1">'</span><span class="s">@*/*'</span><span class="pi">:</span>
+    <span class="c1"># scoped packages</span>
+    <span class="na">access</span><span class="pi">:</span> <span class="s">$all</span>
+    <span class="na">publish</span><span class="pi">:</span> <span class="s">$authenticated</span>
+    <span class="na">proxy</span><span class="pi">:</span> <span class="s">npmjs</span>
+
+  <span class="s1">'</span><span class="s">*'</span><span class="pi">:</span>
+    <span class="c1"># allow all users (including non-authenticated users) to read and</span>
+    <span class="c1"># publish all packages</span>
+    <span class="c1">#</span>
+    <span class="c1"># you can specify usernames/groupnames (depending on your auth plugin)</span>
+    <span class="c1"># and three keywords: "$all", "$anonymous", "$authenticated"</span>
+    <span class="na">access</span><span class="pi">:</span> <span class="s">$all</span>
+
+    <span class="c1"># allow all known users to publish packages</span>
+    <span class="c1"># (anyone can register by default, remember?)</span>
+    <span class="na">publish</span><span class="pi">:</span> <span class="s">$authenticated</span>
+
+    <span class="c1"># if package is not available locally, proxy requests to 'npmjs' registry</span>
+    <span class="na">proxy</span><span class="pi">:</span> <span class="s">npmjs</span>
+
+<span class="c1"># log settings</span>
+<span class="na">logs</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="pi">{</span><span class="nv">type</span><span class="pi">:</span> <span class="nv">stdout</span><span class="pi">,</span> <span class="nv">format</span><span class="pi">:</span> <span class="nv">pretty</span><span class="pi">,</span> <span class="nv">level</span><span class="pi">:</span> <span class="nv">http</span><span class="pi">}</span>
+  <span class="c1">#- {type: file, path: sinopia.log, level: info}</span>
+</code></pre></div></div>
+
+<h2 id="추가-설정">추가 설정</h2>
+
+<ul>
+  <li>외부에서의 연결과 용량 제한을 늘리기 위해 설정 파일 하단에 <code class="language-plaintext highlighter-rouge">listen</code>과 <code class="language-plaintext highlighter-rouge">max_body_size</code>를 추가하여 사용할 수 있다.</li>
+  <li>전체 옵션은 <a href="https://github.com/rlidwka/sinopia/blob/master/conf/full.yaml">여기</a>에서 확인할 수 있다.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">yaml linenumber
+listen: 0.0.0.0:4873
+max_body_size: 100mb
+</code></p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://docs.npmjs.com/using-npm/scope.html">npm-scope</a></li>
+  <li><a href="https://docs.npmjs.com/about-private-packages">npm-about-private-packages</a></li>
+  <li><a href="https://www.npmjs.com/package/sinopia">sinopia</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#npm" class="page__taxonomy-item" rel="tag">NPM</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/nodejs" class="page__taxonomy-item" rel="tag">Nodejs</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-02-02T00:00:00+09:00">February 2, 2020</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2019/12/15/what-is-padding-hack/" class="pagination--pager" title="Padding Hack으로 반응형 SVG 만들기
+">Previous</a>
+    
+    
+      <a href="/blog/2020/03/13/basic-css/" class="pagination--pager" title="CSS 기본 정리
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

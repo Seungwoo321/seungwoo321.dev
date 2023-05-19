@@ -1,0 +1,915 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Amazon Linux2 OS에 레드마인을 설치하는 방법 - SEUNGWOO’S TECH LOG</title>
+<meta name="description" content="AWS 코드 커밋(CodeCommit)에 구성된 모든 프로젝트들의 이슈 추적과 코드 리뷰 등을 위해 레드마인(Redmine)을 Amazon Linux2 OS에 설치하는 과정에 대한 기록과 이에 대한 후기입니다.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="SEUNGWOO'S TECH LOG">
+<meta property="og:title" content="Amazon Linux2 OS에 레드마인을 설치하는 방법">
+<meta property="og:url" content="/blog/2022/01/20/how_to_install_redmine/">
+
+
+  <meta property="og:description" content="AWS 코드 커밋(CodeCommit)에 구성된 모든 프로젝트들의 이슈 추적과 코드 리뷰 등을 위해 레드마인(Redmine)을 Amazon Linux2 OS에 설치하는 과정에 대한 기록과 이에 대한 후기입니다.">
+
+
+
+  <meta property="og:image" content="/assets/images/template.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-01-20T00:00:00+09:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/2022/01/20/how_to_install_redmine/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="SEUNGWOO'S TECH LOG Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon.png" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="32x32"
+  href="/assets/favicons/favicon-32x32.png"
+/>
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="/assets/favicons/favicon-16x16.png"
+/>
+<meta
+  name="google-site-verification"
+  content="px1TntEZ-EKoV9k9xHvbO7KsQMLwj_Ajab5nprTM_pM"
+/>
+<link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+<script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7701657858733816"
+  crossOrigin="anonymous"
+></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          SEUNGWOO'S TECH LOG
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/Seungwoo321">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/logo.png" alt="" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Seoul</span>
+        </li>
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:seungwoo321@gmail.com">
+            <meta itemprop="email" content="seungwoo321@gmail.com" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/Seungwoo321" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Category</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/web">Web</a></li>
+          
+            <li><a href="/categories/javascript">JavaScript</a></li>
+          
+            <li><a href="/categories/nodejs">NodeJS</a></li>
+          
+            <li><a href="/categories/css">CSS</a></li>
+          
+            <li><a href="/categories/vue">Vue</a></li>
+          
+            <li><a href="/categories/aws">AWS</a></li>
+          
+            <li><a href="/categories/linux">Linux</a></li>
+          
+            <li><a href="/categories/ps">PS</a></li>
+          
+            <li><a href="/categories/git">Git</a></li>
+          
+            <li><a href="/categories/Quant">Quant</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <span class="nav__sub-title">Project</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/vue-pivottable">VuePivottable</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Amazon Linux2 OS에 레드마인을 설치하는 방법">
+    <meta itemprop="description" content="AWS 코드 커밋(CodeCommit)에 구성된 모든 프로젝트들의 이슈 추적과 코드 리뷰 등을 위해 레드마인(Redmine)을 Amazon Linux2 OS에 설치하는 과정에 대한 기록과 이에 대한 후기입니다.">
+    <meta itemprop="datePublished" content="2022-01-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Amazon Linux2 OS에 레드마인을 설치하는 방법
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-01-20T00:00:00+09:00">January 20, 2022</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#인프라-구성">인프라 구성</a></li><li><a href="#설치-과정">설치 과정</a><ul><li><a href="#1-데이터베이스-구성">1. 데이터베이스 구성</a><ul><li><a href="#mariadb-설치">mariadb 설치</a></li><li><a href="#데이터-베이스-생성">데이터 베이스 생성</a></li></ul></li><li><a href="#2-종속성-설치">2. 종속성 설치</a><ul><li><a href="#패키지-업데이트-및-설치">패키지 업데이트 및 설치</a></li><li><a href="#ruby-25-이후-버전-설치">ruby 2.5 이후 버전 설치</a></li></ul></li><li><a href="#3-gem-설치-및-데이터베이스-스키마-생성">3. Gem 설치 및 데이터베이스 스키마 생성</a></li><li><a href="#4-파일-시스템-권한-설정">4. 파일 시스템 권한 설정</a></li><li><a href="#5-테스트">5. 테스트</a></li><li><a href="#6-nginx--passenger">6. nginx + passenger</a></li></ul></li><li><a href="#추가-설정">추가 설정</a><ul><li><a href="#레드마인-플러그인-설치">레드마인 플러그인 설치</a></li><li><a href="#이메일-서버-설정하기">이메일 서버 설정하기</a></li></ul></li><li><a href="#설치-후기">설치 후기</a><ul><li><a href="#어떤-버전을-설치할-것인가">어떤 버전을 설치할 것인가</a></li><li><a href="#프로덕션-환경을-위한-서버는-어떻게-할-것인가">프로덕션 환경을 위한 서버는 어떻게 할 것인가</a></li></ul></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>AWS 코드 커밋(CodeCommit)에 구성된 모든 프로젝트들의 이슈 추적과 코드 리뷰 등을 위해 레드마인(Redmine)을 Amazon Linux2 OS에 설치하는 과정에 대한 기록과 이에 대한 후기입니다.</p>
+
+<!--more-->
+
+<h2 id="인프라-구성">인프라 구성</h2>
+
+<p><img src="/assets/images/posts/2022/01/20/redmine_architecture.png" layout="fill" style="borderRadius: 50% !important" /></p>
+
+<p>레드마인 EC2 인스턴스를 차후에는 프라이빗(private) 환경으로 이동할 것을 고려해서 서브넷을 구성했습니다. 실제 설치는 퍼블릭(public) 서브넷의 EC2에서 진행했습니다.</p>
+
+<ul>
+  <li>vpc x 1(10.200.0.0/16) (redmine-vpc)</li>
+  <li>subnet x 4 (redmine-pub-2a, redmine-pub-2c, redmine-pri-2a, redmine-pri-2c )</li>
+  <li>라우팅 테이블 x 2 (redmine-pub-rt, redmine-pri-rt)</li>
+  <li>인터넷 게이트웨이 (redmine-igw)</li>
+  <li>route53 - 도메인 추가</li>
+  <li>ACM 인증서 발급 - https 서비스를 위해 인증서 발급</li>
+  <li>보안그룹 (redmine-elb-sg, redmine-web-sg)
+    <ul>
+      <li>elb: 인바운드 443 포트 any 허용</li>
+      <li>web: 인바운드 80포트 redmine-elb-sg만 허용, 22포트 사무실만 허용</li>
+    </ul>
+  </li>
+  <li>ELB: 로드밸런서 (REDMINE-ALB), 타겟 그룹(REDMINE-ALB-TG)
+    <ul>
+      <li>80포트는 443으로 리다이렉트 (ACM인증서 사용)</li>
+      <li>443포트는 EC2 80포트로 포트포워딩</li>
+    </ul>
+  </li>
+  <li>EC2 (t2.medium, redmine 설치)</li>
+</ul>
+
+<h2 id="설치-과정">설치 과정</h2>
+
+<h3 id="1-데이터베이스-구성">1. 데이터베이스 구성</h3>
+
+<h4 id="mariadb-설치">mariadb 설치</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">## 설치 및 설정</span>
+<span class="nb">sudo </span>yum <span class="nb">install</span> <span class="nt">-y</span> mariadb-server mysql-devel
+<span class="nb">sudo </span>mysql_secure_installation
+
+<span class="c">## 부팅 자동 실행</span>
+<span class="nb">sudo </span>systemctl stop mariadb
+
+<span class="c">## 서비스 시작 종료</span>
+<span class="nb">sudo </span>systemctl start mariadb
+<span class="nb">sudo </span>systemctl <span class="nb">enable </span>mariadb
+</code></pre></div></div>
+
+<h4 id="데이터-베이스-생성">데이터 베이스 생성</h4>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">redmine</span> <span class="nb">CHARACTER</span> <span class="k">SET</span> <span class="n">utf8</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">USER</span> <span class="s1">'redmine'</span><span class="o">@</span><span class="s1">'localhost'</span> <span class="n">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">'redmine'</span><span class="p">;</span>
+<span class="k">GRANT</span> <span class="k">ALL</span> <span class="k">PRIVILEGES</span> <span class="k">ON</span> <span class="n">redmine</span><span class="p">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">'redmine'</span><span class="o">@</span><span class="s1">'localhost'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="2-종속성-설치">2. 종속성 설치</h3>
+
+<h4 id="패키지-업데이트-및-설치">패키지 업데이트 및 설치</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nt">-y</span> update 
+<span class="nb">sudo </span>yum <span class="nt">-y</span> <span class="nb">install </span>git make gcc-c++ patch libicu-devel readline-devel libxml2-devel libxslt-devel ImageMagick ImageMagick-devel openssl-devel libcurl-devel curl
+</code></pre></div></div>
+
+<h4 id="ruby-25-이후-버전-설치">ruby 2.5 이후 버전 설치</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># rbenv 설치</span>
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+<span class="nb">echo</span> <span class="s1">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+<span class="nb">echo</span> <span class="s1">'eval "$(rbenv init -)"'</span> <span class="o">&gt;&gt;</span> ~/.bash_profile
+<span class="nb">source</span> .bash_profile
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+<span class="c"># ruby 2.7 설치</span>
+rbenv <span class="nb">install </span>2.7.5
+rbenv global 2.7.5
+rbenv rehash
+</code></pre></div></div>
+
+<h3 id="3-gem-설치-및-데이터베이스-스키마-생성">3. Gem 설치 및 데이터베이스 스키마 생성</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># install </span>
+wget https://www.redmine.org/releases/redmine-4.2.3.tar.gz
+<span class="nb">tar </span>xvfz redmine-4.2.3.tar.gz
+<span class="nb">mv </span>redmine-4.2.3 /var/www/
+<span class="nb">export </span><span class="nv">REDMINE</span><span class="o">=</span>/var/www/redmine-4.2.3
+<span class="nb">cd</span> <span class="nv">$REDMINE</span>
+
+<span class="c"># database 연결 설정</span>
+<span class="nb">cp </span>config/database.yml.example config/database.yml
+vim config/database.yml
+
+<span class="c"># bundle install</span>
+bundle <span class="nb">install</span> <span class="nt">--without</span> development <span class="nb">test
+</span>bundle <span class="nb">exec </span>rake generate_secret_token
+
+<span class="c"># create database schema</span>
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>rake db:migrate
+<span class="nv">RAILS_ENV</span><span class="o">=</span>production <span class="nv">REDMINE_LANG</span><span class="o">=</span>ko bundle <span class="nb">exec </span>rake redmine:load_default_data
+</code></pre></div></div>
+
+<h3 id="4-파일-시스템-권한-설정">4. 파일 시스템 권한 설정</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> tmp tmp/pdf public/plugin_assets
+<span class="nb">sudo chown</span> <span class="nt">-R</span> nginx:nginx files log tmp public/plugin_assets
+<span class="nb">sudo chmod</span> <span class="nt">-R</span> 755 files log tmp public/plugin_assets
+
+<span class="c"># Note: If you have files in these directories (e.g. restore files from backup), make sure these files are not executable.</span>
+<span class="nb">sudo </span>find files log tmp public/plugin_assets <span class="nt">-type</span> f <span class="nt">-exec</span> <span class="nb">chmod</span> <span class="nt">-x</span> <span class="o">{}</span> +
+</code></pre></div></div>
+
+<h3 id="5-테스트">5. 테스트</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>rails server webrick <span class="nt">-e</span> production
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">http://localhost:3000&gt;</code> 으로 접속
+    <ul>
+      <li>login: admin</li>
+      <li>password: admin (초기 패스워드)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong><em>webrick은 프로덕션으로 적합하지 않으니 그대로 사용하지는 말아야 합니다</em></strong></p>
+
+<h3 id="6-nginx--passenger">6. nginx + passenger</h3>
+
+<p>프로덕션 환경을 위해서 nginx를 설치합니다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install </span>passenger
+<span class="nb">sudo</span> <span class="nt">-s</span> <span class="nt">-E</span>
+/home/ec2-user/.rbenv/versions/2.7.5/bin/ruby /home/ec2-user/.rbenv/versions/2.7.5/lib/ruby/gems/2.7.0/gems/passenger-6.0.12/bin/passenger-install-nginx-module
+</code></pre></div></div>
+
+<p>nginx 시작 및 종료</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># nginx 시작</span>
+<span class="nb">sudo</span> /opt/nginx/sbin/nginx
+
+<span class="c"># nginx 종료</span>
+<span class="nb">sudo </span>pkill <span class="nt">-9</span> nginx
+</code></pre></div></div>
+
+<h2 id="추가-설정">추가 설정</h2>
+
+<h3 id="레드마인-플러그인-설치">레드마인 플러그인 설치</h3>
+
+<ul>
+  <li>설치할 플러그인을 <code class="language-plaintext highlighter-rouge">/var/www/redmine-4.2.3/plugins</code>에 위치 시킵니다.</li>
+  <li><code class="language-plaintext highlighter-rouge">/var/www/redmine-4.2.3/</code>에서 다음 명령어를 실행하고 nginx 서비스를 재시작합니다.</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake redmine:plugins:migrate <span class="nv">RAILS_ENV</span><span class="o">=</span>production
+</code></pre></div></div>
+
+<h3 id="이메일-서버-설정하기">이메일 서버 설정하기</h3>
+
+<p>config 폴더에 있는 예제 파일을 복사하고 sendmail 서비스를 사용하는 설정을 추가합니다. 다른 메일 서버를 설정하려는 경우 공식 문서를 참고해 주세요.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>configuration.yml.example configuration.yml
+vim configuration.yml
+</code></pre></div></div>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">production</span><span class="pi">:</span>
+  <span class="na">email_delivery</span><span class="pi">:</span>
+    <span class="na">delivery_method</span><span class="pi">:</span> <span class="s">:sendmail</span>
+</code></pre></div></div>
+
+<h2 id="설치-후기">설치 후기</h2>
+
+<p>설치를 진행하면서 크게 두 가지의 고민과 어려움이 있었습니다.</p>
+
+<h3 id="어떤-버전을-설치할-것인가">어떤 버전을 설치할 것인가</h3>
+
+<p>첫 번째는 Amazon Linux OS에 루비를 2.5 이후 버전으로 설치하는 부분입니다.
+레드마인 설치 가이드 공식 문서에서 “루비(Ruby) 커뮤니티에서 루비 2.5 및 이전 버전에 대한 지원이 종료되었습니다.”라는 문구와 “레드마인 4.2는 Ruby 2.7.2 이상을 사용하세요”라는 문구가 있었기 때문에 2.7.5 버전을 선택할 수 있었습니다.
+다행히도 노드(node.js)의 <code class="language-plaintext highlighter-rouge">nvm</code>과 같이 루비를 버전별로 관리할 수 있는 <code class="language-plaintext highlighter-rouge">rbenv</code>을 통해서 해결할 수 있었습니다.</p>
+
+<h3 id="프로덕션-환경을-위한-서버는-어떻게-할-것인가">프로덕션 환경을 위한 서버는 어떻게 할 것인가</h3>
+
+<p>두 번째로는 프로덕션 환경을 위해 webrick을 대신할 서버를 결정하고 설치하는 과정입니다.
+설치를 진행하면서 레드마인은 루비로 작성된 MVC 패턴을 이용하는 오픈 소스 웹 프레임워크인 루비 온 레일즈(Ruby on Rails)로 개발되었고 엔지닉스(nginx)로
+서비스하기 위해서는 패신저(passenger)를 설치하고 관련 설정을 엔지닉스에 추가해야 된다는 것까지 알게 되었습니다.</p>
+
+<p>그래서 처음으로 시도한 방법이 yum으로 설치한 엔지닉스의 설정 파일에 젬(gem)으로 설치한 패신저에 관한 설정을 추가한 것인데 정상적으로 동작하지 않는 겁니다.
+검색을 통해서 yum으로 설치된 엔지닉스는 삭제를 하고 젬을 통해 패신저를 설치할 때 제공되는 옵션으로 엔지닉스를 함께 설치함으로 알 수 없던 패신저 설정이 엔지닉스 설정 파일에 자동 추가되면서 문제를 해결할 수 있었습니다.</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="https://altkeycode.tistory.com/12">altkeycode - Redmine 설치 + nginx + Passenger</a></li>
+  <li><a href="https://www.redmine.org/projects/redmine/wiki/RedmineInstall">레드마인 공식 문서 - 설치</a></li>
+  <li><a href="https://www.redmine.org/projects/redmine/wiki/EmailConfiguration">레드마인 공식 문서 - 이메일 설정</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#codecommit" class="page__taxonomy-item" rel="tag">CodeCommit</a><span class="sep">, </span>
+    
+      <a href="/tags/#redmine" class="page__taxonomy-item" rel="tag">Redmine</a><span class="sep">, </span>
+    
+      <a href="/tags/#trouble-shooting" class="page__taxonomy-item" rel="tag">trouble shooting</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/linux" class="page__taxonomy-item" rel="tag">Linux</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2022-01-20T00:00:00+09:00">January 20, 2022</time></p>
+
+
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/2022/01/19/how_does_it_work_javascript/" class="pagination--pager" title="자바스크립트의 동작원리
+">Previous</a>
+    
+    
+      <a href="/blog/2022/01/23/deploy-vue-pivottable-0-4-1/" class="pagination--pager" title="vue-pivottable v0.4.1 업데이트
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/05/19/what-is-lis-algorithm/" rel="permalink">LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-05-19T00:00:00+09:00">May 19, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/how-to-pwa-with-vue/" rel="permalink">오리진이 다른 리소스를 서비스워커로 캐싱하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/28/big-decimal-and-e-notation/" rel="permalink">데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-28T00:00:00+09:00">March 28, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/2023/03/08/boj-node-js/" rel="permalink">BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2023-03-08T00:00:00+09:00">March 8, 2023</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 SEUNGWOO'S TECH LOG.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>
