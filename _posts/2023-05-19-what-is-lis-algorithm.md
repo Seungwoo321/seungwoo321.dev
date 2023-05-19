@@ -155,9 +155,9 @@ console.log(lis) // [1, 2, 3, 4, 6, 8]
 
 ```js
 const answer = [];
-let j = idxes.length - 1;
+let j = indexes.length - 1;
 while (answer.length < lis.length) {
-    if (idxes[j] === lis.length - answer.length) {
+    if (indexes[j] === lis.length - answer.length) {
         answer.push(arr[j]);
     }
     j--;
