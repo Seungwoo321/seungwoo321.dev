@@ -2,11 +2,8 @@
 title: 브라우저 렌더링 과정
 date: '2022-01-24'
 tags: ["Frontend", "JavaScript"]
-layout: post
-author_profile: false
+categories: Web
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 브라우저 렌더링 과정은 크게 다음 4단계로 설명 할 수 있습니다.

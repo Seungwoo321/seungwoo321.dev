@@ -1,12 +1,9 @@
 ---
 title: BOJ에서 JavaScript로 문제를 풀 때 메모리와 시간 제한 적용하기
 date: '2023-03-08'
-tags: ["Shell", "javascript", "Algorithms", "BOJ"]
-layout: post
-author_profile: false
+tags: ["Shell", "JavaScript", "BOJ"]
+categories: PS
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 BOJ에서 JavaScript로 문제를 풀때 시간 초과(TLE)와 메모리 초과(MLE) 문제를 자주 경험해왔습니다. 대부분의 알고리즘 강의나 문제풀이가 Python, C++, Java 위주로 구현되어 있기 때문일겁니다. BOJ 역시 JavaScript 풀이가 적고 같은 풀이라도 언어 특성 때문에 시간 제한과 메모리 제한에 걸리기도 합니다. 문제를 최종 제출하기 전에 문제점을 파악하여 코드를 개선한다면 BOJ에서 JavaScript로 문제를 푸는 데 도움이 될 것입니다.

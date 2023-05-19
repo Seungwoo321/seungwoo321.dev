@@ -2,11 +2,8 @@
 title: VSCode에서 Vue 개발 환경 구성하기
 date: "2019-04-30"
 tags: ["Vue", "VsCode"]
-author_profile: false
-layout: post
+categories: Vue
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 Vue CLI 3로 생성한 프로젝트에서 VSCode의 확장 플러그인과 커스텀 설정을 통해 IntelliSense와 ESLint를 활용할 수 있다.
 <!--more-->

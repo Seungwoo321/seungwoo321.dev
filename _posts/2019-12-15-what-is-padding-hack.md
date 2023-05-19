@@ -2,11 +2,8 @@
 title: Padding Hack으로 반응형 SVG 만들기
 date: 2019-12-15
 tags: ["SVG", "CSS"]
+categories: CSS
 permalink: /blog/:year/:month/:day/:title/
-layout: post
-author_profile: false
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 지역과 관련된 데이터를 시각화하기 위해 SVG와 d3 함수를 이용해서 표현한 지도에 패딩 핵(Padding Hack)이란 기법을 통해서 반응형으로 구현한 경험을 정리하자.

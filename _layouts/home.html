@@ -1,13 +1,7 @@
 ---
 layout: archive
 ---
-{% assign author = page.author | default: page.authors[0] | default: site.author %}
-{% assign author = site.data.authors[author] | default: author %}
-{% if author.bio %}
-<small>
-  {{ author.bio }}
-</small>
-{% endif %}
+
 {{ content }}
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>

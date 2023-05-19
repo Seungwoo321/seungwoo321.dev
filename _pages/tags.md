@@ -1,5 +1,5 @@
 ---
-author_profile: false
+author_profile: true
 layout: tags
 title: Tags
 permalink: /tags/

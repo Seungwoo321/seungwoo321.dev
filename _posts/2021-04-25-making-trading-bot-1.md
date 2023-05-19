@@ -2,11 +2,8 @@
 title: Amazon Athena SQL로 캔들 데이터 생성하기
 date: '2021-04-25'
 tags: ["Athena", "SQL", "Trading Bot"]
-layout: post
-author_profile: false
+categories: Quant
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 > 이 글은 2018년 4월경 테스트를 진행하면서 기록한 내용을 바탕으로 작성했습니다.

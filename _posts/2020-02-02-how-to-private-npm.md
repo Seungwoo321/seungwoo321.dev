@@ -1,13 +1,9 @@
 ---
-layout: post
-author_profile: false
 title: 비공개 NPM 저장소 구성하기
 date: '2020-02-02'
 tags: ["NPM"]
-author_profile: false
+categories: Nodejs
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 오픈소스 Sinopia를 사용해서 Prvate NPM 저장소를 구성하고 스코프 문제를 해결한 경험을 정리하자.

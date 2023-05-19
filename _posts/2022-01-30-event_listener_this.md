@@ -2,11 +2,8 @@
 title: 이벤트 핸들러 내부의 this
 date: '2022-01-30'
 tags: ["Frontend", "JavaScript"]
-layout: post
-author_profile: false
+categories: Web
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 이벤트를 핸들러 내부의 this를 예제로 정리해보자.

@@ -2,11 +2,8 @@
 title: CSS 박스 모델
 date: '2022-10-16'
 tags: ["Frontend", "CSS"]
-layout: post
-author_profile: false
+categories: CSS
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 CSS는 HTML요소를 화면에 출력하는데 크게 인라인 (inline) 박스와 블록 (block) 박스로 구분합니다.

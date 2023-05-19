@@ -2,11 +2,8 @@
 title: 이벤트 위임(Event Delegation)
 date: '2022-01-29'
 tags: ["Frontend", "JavaScript"]
-layout: post
-author_profile: false
+categories: Web
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 ## 이벤트 위임이란

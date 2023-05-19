@@ -2,12 +2,8 @@
 title: Amazon Linux2 OS에 레드마인을 설치하는 방법
 date: '2022-01-20'
 tags: ["CodeCommit", "trouble shooting", "Redmine"]
-draft: false
-layout: post
-author_profile: false
+categories: Linux
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 AWS 코드 커밋(CodeCommit)에 구성된 모든 프로젝트들의 이슈 추적과 코드 리뷰 등을 위해 레드마인(Redmine)을 Amazon Linux2 OS에 설치하는 과정에 대한 기록과 이에 대한 후기입니다.

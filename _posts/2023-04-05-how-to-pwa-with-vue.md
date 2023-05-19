@@ -2,11 +2,8 @@
 title: 오리진이 다른 리소스를 서비스워커로 캐싱하기
 date: "2023-03-28"
 tags: ["Workbox", "Frontend", "PWA", "Cache"]
-author_profile: false
-layout: post
+categories: Web
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 Vue CLI3의 vue add pwa 명령어를 실행하면 쉽게 PWA를 설정할 수 있습니다. 이것만으로 빌드 시 생성되는 파일이 서비스 워커에 의해 캐싱이 됩니다. 여기에 추가로 교차 오리진에서 호출하는 리소스를 캐싱 해본 경험을 정리했습니다.

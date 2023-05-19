@@ -2,11 +2,8 @@
 title: IE 11 Syntax Error - Script1002
 date: '2020-03-16'
 tags: ["IE", "trouble shooting"]
-layout: post
-author_profile: false
+categories: Vue
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 vue-pivottable 컴포넌트의 스타일을 수정하고 최종적으로 프로젝트에서는 `import { VsPivottable, VsPivottableUi } from 'vs-pivottable'`과 같이 커스텀 된 형태로 사용하고 싶었다. 그런데 Internet Explorer 11에서 확인 시 빈 페이지가 로딩되고 콘솔 창에는 Script1002 오류만 찍혀 있었다.

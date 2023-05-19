@@ -1,12 +1,9 @@
 ---
 title: 자바스크립트에서 큐와 스택 자료구조 구현하기
 date: '2023-03-02'
-tags: ["Frontend", "javascript", "queue", "stack",]
-layout: post
-author_profile: false
+tags: ["Frontend", "JavaScript", "PS"]
+categories: JavaScript
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 자료구조 및 알고리즘을 공부하면서 자주 사용되는 자료구조인 큐와 스택을 자바스크립트로 구현해보고 BOJ에서 문제를 풀어보면서 자바스크립트에서 어떻게 구현하고 활용하는 것이 유리한지 정리해보았습니다.

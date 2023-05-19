@@ -1,12 +1,10 @@
 ---
 title: 여러 개의 GitHub/CodeCommit 인증정보 관리하기
 date: "2019-04-21"
-tags: ["git", "CodeCommit"]
-author_profile: false
-layout: post
+tags: ["Git", "CodeCommit"]
+categories: Git
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
+last_modified_at: "2019-04-21"
 ---
 이렇게 하면 단일 컴퓨터에서 여러 GItHub/CodeCommit 인증정보를 매번 입력하지 않고 HTTPS 프로토콜로 리모트 저장소에 접근할 수 있다.
 <!--more-->

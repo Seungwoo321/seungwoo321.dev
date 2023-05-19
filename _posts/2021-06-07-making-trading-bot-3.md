@@ -2,11 +2,8 @@
 title: 자동매매 알고리즘 개발과 트레이딩 봇 실전 6개월
 date: '2021-06-07'
 tags: ["Trading Bot", "TypeScript"]
-layout: post
-author_profile: false
+categories: Quant
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 처음에는 막막하기만 했던 기본 캔들 데이터 생성을 인플럭스DB (InfluxDB)를 사용해서 쉽게 구현할 수 있었다. 다음은 언제 사고 언제 파는 게 좋을지를 과거 데이터를 통해 시뮬레이션 해보기 위해서 거래소에서 제공하는 REST API를 통해서 2017년부터 현재까지의 캔들 데이터를 인플럭스DB에 수집하는 스크립트를 노드 (node.js)로 작성했다. 증권 거래소와 달리 암호화폐 거래소는 REST API를 지원하므로 웹 개발자로서는 접근이 훨씬 용이해서 실전 봇 까지 바로 진행할 수 있었다.

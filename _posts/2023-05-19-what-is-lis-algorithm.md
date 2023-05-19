@@ -1,12 +1,9 @@
 ---
 title: LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
 date: "2023-05-19"
-tags: ["ps", "boj"]
-author_profile: false
-layout: post
+tags: ["PS", "BOJ"]
+categories: PS
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 백준에서 문제 해결 능력을 키우면서 최장 증가 부분 수열문제를 풀게 되었다. 최장 증가 수열이란 주어진 수열의 부분 수열 중에서 숫자가 오름차순으로 정렬 되는 가장 긴 부분 수열을 의미한다. 문제를 풀면서 공부한 내용을 정리했다.

@@ -1,8 +1,35 @@
 # main links
 main:
-  - title: "Blog"
-    url: /blog/
-  - title: "Tags"
-    url: /tags/
-  - title: "About"
+  - title: Home
+    url: /
+  - title: About
     url: /about/
+  - title: GitHub
+    url: https://github.com/Seungwoo321
+categories:
+  - title: Category
+    children:
+      - title: Web
+        url: /categories/web
+      - title: JavaScript
+        url: /categories/javascript
+      - title: NodeJS
+        url: /categories/nodejs
+      - title: CSS
+        url: /categories/css
+      - title: Vue
+        url: /categories/vue
+      - title: AWS
+        url: /categories/aws
+      - title: Linux
+        url: /categories/linux
+      - title: PS
+        url: /categories/ps
+      - title: Git
+        url: /categories/git
+      - title: Quant
+        url: /categories/Quant
+  - title: Project
+    children:
+      - title: VuePivottable
+        url: /vue-pivottable

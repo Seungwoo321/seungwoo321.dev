@@ -2,11 +2,8 @@
 title: 어떻게 const로 선언한 객체의 속성값이 바뀌는 것일까
 date: '2022-01-31'
 tags: ["Frontend", "JavaScript"]
-layout: post
-author_profile: false
+categories: JavaScript
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 const 키워드를 사용하여 선언된 변수는 블록 범위의 상수입니다. 상수의 값은 재할당할 수 없으며 다시 선언할 수도 없습니다. 그러나 상수가 객체 또는 배열인 경우 해당 속성이나 항목을 업데이트하거나 제거할 수 있습니다.

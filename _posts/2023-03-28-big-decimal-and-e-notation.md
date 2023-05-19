@@ -1,12 +1,9 @@
 ---
 title: 데이터 정확성을 위한 빅 데시멀 타입과 지수 표기법의 소수점 표시
 date: "2023-03-28"
-tags: ["javascript", "Frontend", "Big Decimal", "Double"]
-author_profile: false
-layout: post
+tags: ["JavaScript", "Frontend", "Big Decimal"]
+categories: JavaScript
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 AWS 빌링 데이터를 다루는 프론트엔드 개발자로 일하면서 백엔드에서 전달받은 숫자 데이터가 부동 소수점 연산의 함정과 지수 표기식(e notation)으로 표현되면서 생긴 이슈들을 해결하면서 빅 데시멀과 지수 표기법에 대해 정리해보았습니다.

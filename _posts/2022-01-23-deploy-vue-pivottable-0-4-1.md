@@ -2,11 +2,8 @@
 title: vue-pivottable v0.4.1 업데이트
 date: '2022-01-23'
 tags: ["vue-pivottable", "Vue"]
-layout: post
-author_profile: false
+categories: Vue
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 작년 오픈소스 아카데미 컨트리뷰톤 참여를 계기로 2019년 8월 22일 첫 커밋(Commit)으로 시작해 NPM에 배포해서 관리 중인

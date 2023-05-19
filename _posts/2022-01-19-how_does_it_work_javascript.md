@@ -2,11 +2,8 @@
 title: 자바스크립트의 동작원리
 date: '2022-01-19'
 tags: ["Frontend", "JavaScript"]
-layout: post
-author_profile: false
+categories: JavaScript
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 자바스크립트 엔진, 런타임, 호출 스택, 이벤트 루프를 간단하게 정리했습니다.

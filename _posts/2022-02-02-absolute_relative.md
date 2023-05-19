@@ -2,11 +2,8 @@
 title: absolute와 relative의 차이에 대해서 설명하세요
 date: '2022-02-02'
 tags: ["Frontend", "CSS"]
-layout: post
-author_profile: false
+categories: CSS
 permalink: /blog/:year/:month/:day/:title/
-toc: true
-excerpt_separator: <!--more-->
 ---
 
 CSS 포지션 absolute와 relative의 차이에 대해 정리하자

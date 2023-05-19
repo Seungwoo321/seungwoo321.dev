@@ -1,6 +1,5 @@
 ---
-author_profile: false
-layout: default
+layout: home
 title: 
 permalink: /
 classes: wide

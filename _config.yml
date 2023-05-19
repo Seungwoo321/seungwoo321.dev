@@ -21,24 +21,19 @@
 title: SEUNGWOO'S TECH LOG
 email: seungwoo321@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # github_username:  Seungwoo321
 theme: minimal-mistakes-jekyll
-minimal_mistakes_skin: contrast
-paginate: 5 # amount of posts to show
+minimal_mistakes_skin: dirt
+# minimal_mistakes_skin: dark
+paginate: 5
 paginate_path: /page:num/
 author:
-  name: Seungwoo Lee
-  avatar: /assets/images/avatar.jpeg
-  bio: 1인 개발자로 성장하는 것을 목표로 공부하는 프론트엔드 개발자입니다.
+  avatar: /assets/images/logo.png
   location: Seoul
   email: seungwoo321@gmail.com
   github: Seungwoo321
-  linkedin: seungwoo321
 og_image: /assets/images/template.png
 include:
   - .htaccess
@@ -102,3 +97,32 @@ whitelist:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+search                   : true # true, false (default) 블로그 내 검색창 활성화
+search_full_content      : # true, false (default)
+search_provider          : lunr # lunr (default), algolia, google
+
+category_archive:
+  type: liquid
+  path: /
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ''
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      toc: true
+      toc_sticky: true
+      read_time: true
+      show_date: true
+      comments: true
+      related: true
+      excerpt_separator: <!--more-->
+      sidebar:
+        nav: "categories"

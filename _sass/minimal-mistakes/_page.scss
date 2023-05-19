@@ -71,9 +71,11 @@ body {
 .page__title {
   margin-top: 0;
   line-height: 1;
+  font-size: $type-size-3;
 
   & + .page__meta {
     margin-top: -0.5em;
+    font-size: $type-size-6;
   }
 }
 
