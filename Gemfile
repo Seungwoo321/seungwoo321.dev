@@ -7,4 +7,5 @@ gem "jekyll-seo-tag"
 gem "jekyll-sitemap"
 gem "jekyll-feed"
 gem 'webrick'
+gem 'jekyll-sass-converter', '~> 2.2'
 gem 'minimal-mistakes-jekyll'
