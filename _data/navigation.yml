@@ -28,7 +28,9 @@ categories:
       - title: Git
         url: /categories/git
       - title: Quant
-        url: /categories/Quant
+        url: /categories/quant
+      - title: Etc
+        url: /categories/etc
   - title: Project
     children:
       - title: VuePivottable

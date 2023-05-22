@@ -103,7 +103,7 @@ search_provider          : lunr # lunr (default), algolia, google
 
 category_archive:
   type: liquid
-  path: /
+  path: /categories/
 tag_archive:
   type: liquid
   path: /tags/
