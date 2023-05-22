@@ -25,7 +25,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 repository: "Seungwoo321/seungwoo321.github.io"
 # github_username:  Seungwoo321
-# theme: minimal-mistakes-jekyll
+theme: minimal-mistakes-jekyll
 minimal_mistakes_skin: dirt
 paginate: 5
 paginate_path: /page:num/
