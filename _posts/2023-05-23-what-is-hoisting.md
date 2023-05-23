@@ -138,5 +138,5 @@ let d = 'd';
 
 ## Reference
 
-- <https://poiemaweb.com/es6-block-scope>
-- <https://developer.mozilla.org/ko/docs/Glossary/Hoisting>
+- [PoiemaWeb](https://poiemaweb.com/es6-block-scope)
+- [MDN](https://developer.mozilla.org/ko/docs/Glossary/Hoisting)
