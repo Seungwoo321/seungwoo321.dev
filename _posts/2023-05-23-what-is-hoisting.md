@@ -71,6 +71,8 @@ console.log(j) // ReferenceError
 var foo = 'bar';
 ```
 
+이 코드는 이렇게 동작할 것이다.
+
 ```js
 var foo, foo = undefined  // 선언 및 초기화 단계
 /** ------------------------------------------ */
@@ -86,6 +88,8 @@ foo = 'bar';              // 할당
 ```js
 let foo = 'bar'
 ```
+
+이 코드는 이렇게 동작할 것이다.
 
 ```js
 let foo;                  // 선언
