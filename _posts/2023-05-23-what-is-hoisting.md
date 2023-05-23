@@ -128,3 +128,8 @@ const c = 'c';
 console.log(d); // ReferenceError
 let d = 'd';
 ```
+
+## Reference
+
+- <https://poiemaweb.com/es6-block-scope>
+- <https://developer.mozilla.org/ko/docs/Glossary/Hoisting>
