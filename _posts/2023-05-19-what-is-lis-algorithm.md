@@ -1,7 +1,7 @@
 ---
 title: LIS (Longest Increasing Subsequence) - 최장 증가 부분 수열
 date: "2023-05-19"
-last_modified_at: "2023-05-22"
+last_modified_at: "2023-05-24"
 tags: ["PS", "BOJ"]
 categories: PS
 permalink: /blog/:year/:month/:day/:title/
@@ -44,7 +44,7 @@ console.log(lis) // [1, 2, 2, 3, 3, 4, 5]
 console.log(Math.max(...lis)); // 5
 ```
 
-1, 5, 2, 8, 3, 4, 6의 최장 증가 부분 수열은 1, 2, 3, 4, 6 이고 길이는 5가 된다. 이 알고리즘을 그대로 사용해서 [BOJ 11053](https://www.acmicpc.net/problem/11053) 문제를 해결 할 수 있다.
+1, 5, 2, 8, 3, 4, 6의 최장 증가 부분 수열은 1, 2, 3, 4, 6 이고 길이는 5가 된다. 이 알고리즘을 그대로 사용해서 [BOJ 11053 - 가장 긴 증가하는 부분 수열](https://www.acmicpc.net/problem/11053) 실버2 문제를 해결 할 수 있다.
 
 ### O(nlogn)으로 구하기
 
@@ -157,7 +157,7 @@ while (answer.length < lis.length) {
 console.log(answer.reverse().join(' ')) // 2 3 4 5 7 8
 ```
 
-이렇게 구현한 O(nlogn) 알고리즘으로는 [가장 긴 증가하는 부분 수열 5](https://www.acmicpc.net/problem/14003) 플래티넘5 문제를 해결 할 수 있다.
+이렇게 구현한 O(nlogn) 알고리즘으로는 [BOJ 14003 - 가장 긴 증가하는 부분 수열 5](https://www.acmicpc.net/problem/14003) 플래티넘5 문제를 해결 할 수 있다.
 
 ## 마무리
 
