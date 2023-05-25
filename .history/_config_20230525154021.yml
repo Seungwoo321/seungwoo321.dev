@@ -52,7 +52,6 @@ search                   : true # true, false (default) 블로그 내 검색창 
 search_full_content      : # true, false (default)
 search_provider          : lunr # lunr (default), algolia, google
 
-
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
