@@ -1,5 +1,5 @@
 ---
-title: 블로그 마이그레이션 우분투에 Ruby 설치하기
+title: 블로그 마이그레이션(1) 우분투에 Ruby 설치하기
 date: "2023-05-24"
 last_modified_at: "2023-05-24"
 tags: ["Jekyll", 'trouble shooting']
