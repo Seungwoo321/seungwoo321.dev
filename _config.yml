@@ -53,6 +53,24 @@ search_full_content      : # true, false (default)
 search_provider          : lunr # lunr (default), algolia, google
 
 
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ''
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      toc: true
+      toc_sticky: true
+      read_time: true
+      show_date: true
+      comments: true
+      related: true
+      sidebar:
+        nav: "categories"
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
