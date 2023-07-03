@@ -4,7 +4,6 @@ date: "2023-05-25"
 last_modified_at: "2023-05-25"
 tags: ["Jekyll", 'trouble shooting']
 categories: Linux
-permalink: /blog/:year/:month/:day/:title/
 ---
 기존의 React + Typescript + Next.js 기반의 블로그 프로젝트를 fork 해서 실제로 jekyll로 마이그레이션하는 과정을 튜토리얼 방식으로 기술 했습니다.
 <!--more-->
