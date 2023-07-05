@@ -159,7 +159,7 @@ service influxdb start
 
 ### InfluxDB 2.2 초기 설정
 
-"http://localhost:8086" 으로 접속하거나 CLI 명령어를 사용해서 초기 설정을 진행할 수 있습니다.
+"<http://localhost:8086>" 으로 접속하거나 CLI 명령어를 사용해서 초기 설정을 진행할 수 있습니다.
 트레이딩 봇 애플리케이션에는 환경 변수로 인플럭스 디비에 데이터를 쓰기 위한 토큰(token) 설정이 필요한데 웹 브라우저에서 초기 설정을 하게 되면 랜덤으로 토큰 값이 생성되고 로그인 후에 웹 페이지에서 확인할 수 있습니다.
 
 <div style="display: flex; flexWrap: wrap">
@@ -394,7 +394,7 @@ docker build -t seungwoo321/cats_mariadb:1.0 -f Dockerfile.mariadb .
 
 #### 컨텍스트를 깃허브 링크로 지정시 이슈 정리
 
-"https://docs.docker.com/engine/reference/commandline/build/" 문서를 보면 컨텍스트를 깃허브로 지정하는 방법이 있습니다.
+"<https://docs.docker.com/engine/reference/commandline/build/>" 문서를 보면 컨텍스트를 깃허브로 지정하는 방법이 있습니다.
 테스트를 하기위해 먼저 Dockerfile의 엔트리 스크립트/쿼리 파일을 깃허브에서 가져오도록 수정했고 이 문서를 참고해서 빌드 명령어를 작성 후 실행해 보았습니다.
 그러면 이 문서의 "Note"에서 언급하는 것처럼 BuildKit의 이슈로 오류가 발생합니다. DOCKER_BUILDKIT을 사용하지 않는다는 의미로 0으로 값을 지정하면 오류는 해결이 되지만 빌드 할 때 시간이 오래 걸려서 좋은 방법은 아닌 것 같습니다.
 
