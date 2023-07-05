@@ -130,7 +130,4 @@ bundle exec jekyll serve
 
 `_posts/2023-05-25-welcome-to-jekyll.markdown` 를 열어보시면 헤더에 `categories: jekyll update`가 추가되어 있는데 카테고리와 관련된 설정이 없기 때문입니다.
 
-
-
-
 layout을 single로 변경해주고 categories를 지워주면 테마가 적용되지만 여기서는 카테고리로 구분하는
