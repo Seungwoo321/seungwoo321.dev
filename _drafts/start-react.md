@@ -2,7 +2,7 @@
 title: Vue개발자의 React 시작기
 date: "2023-05-26"
 last_modified_at: "2023-05-26"
-tags: ["TypeScript", "React"]
+tags: ["TypeScript", "React", "JavaScript"]
 categories: "Frontend"
 ---
 
