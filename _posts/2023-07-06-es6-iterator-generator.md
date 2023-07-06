@@ -37,9 +37,9 @@ const memberOfn = new SalaryMan();
 const memberOfm = new SalaryMan();
 
 memberOfn.setAnnualPay(6000);
-memberOfm.getAnnualPay(3000);
+memberOfm.setAnnualPay(3000);
 
-memberOfn.setAnnualPay() // 6000
+memberOfn.getAnnualPay() // 6000
 memberOfm.getAnnualPay() // 3000
 ```
 
