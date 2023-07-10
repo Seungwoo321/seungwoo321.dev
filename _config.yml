@@ -22,7 +22,7 @@ title: SEUNGWOO'S TECH LOG
 email: seungwoo321@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://seungwoo321.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 repository: "Seungwoo321/seungwoo321.github.io"
 # github_username:  Seungwoo321
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
