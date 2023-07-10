@@ -2,8 +2,6 @@
 main:
   - title: Home
     url: /
-  - title: About
-    url: /about/
   - title: GitHub
     url: https://github.com/Seungwoo321
 categories:

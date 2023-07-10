@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: SEUNGWOO'S TECH LOG
+title: DEV LOG - 코딩보단 생각을
 email: seungwoo321@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
@@ -30,11 +30,11 @@ minimal_mistakes_skin: dirt
 paginate: 5
 paginate_path: /page:num/
 author:
-  avatar: /assets/images/logo.png
+  avatar: /assets/images/avata.png
   location: Seoul
   email: seungwoo321@gmail.com
   github: Seungwoo321
-og_image: /assets/images/template.png
+og_image: /assets/images/og.png
 include:
   - .htaccess
   - _pages
