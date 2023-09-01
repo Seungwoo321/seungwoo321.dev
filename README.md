@@ -6,6 +6,12 @@
 
 - jekyll + [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes)
 
+### run serve
+
+```bash
+bundle exec jekyll serve
+```
+
 ## v2
 
 - react + next + typescript: blog template: <https://github.com/timlrx/tailwind-nextjs-starter-blog>

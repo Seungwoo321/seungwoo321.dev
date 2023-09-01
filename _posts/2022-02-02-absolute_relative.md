@@ -67,6 +67,6 @@ CSS 포지션 absolute와 relative의 차이에 대해 정리하자
     frameborder="0"
 ></iframe>
 
-## 참조링크
+## Reference
 
 * [MDN문서 - position](https://developer.mozilla.org/en-US/docs/Web/CSS/position)
